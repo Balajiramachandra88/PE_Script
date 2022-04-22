@@ -1,0 +1,61 @@
+config:
+  target: "https://admin-api-acceptance.cargomatic.com"
+  processor: "./processors/PE_scenarios.js"
+  payload:
+    - path: "users.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "username"
+        - "password"
+    - path: "add_adjustment_existing_payout.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "shipmentid"
+        - "equipmentid"
+        - "message"
+        - "value"
+        - "type"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      MaxVusers: 1
+scenarios:
+  - flow:
+      - log: "Get auth token"
+      - post:
+          url: "/users/login"
+          headers:
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+            referer: "https://command-acceptance.cargomatic.com/"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: $.token
+              as: token
+      - function: getPayload5
+      - loop:
+        - think: 5     
+        - log: "Driverassigment_details"
+        - post:
+            url: "/api/v2/jobs/62500c93400bdad95048c7b8/driver"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              accept: "vnd.cargomatic+json;version=1"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+            json: "{{ payload5 }}"  
+            capture:
+              - json: $.shipments
+                as: shipments
+        whileTrue: "statusReady"
+        

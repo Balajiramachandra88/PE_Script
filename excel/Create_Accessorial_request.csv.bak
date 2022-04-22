@@ -1,0 +1,2 @@
+shipment,carrierid,shipperid,shipper_name,carrier_name,shipment_id,shipper_rate1,carrier_rate1,carrier_unit_qty,shipper_unit_qty,description,begin_datetime,end_datetime
+62188b45a09b3075b5da4855,518d9941d80f1f0200000002,5918ead7d179d4090000001f,Ceva Ontaro - Yard Moves,DGCarrier,CEV-18403,32.5,20.5,1,1,null,null,null

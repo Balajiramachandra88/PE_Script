@@ -1,0 +1,4 @@
+shipment,carrierid,shipperid,shipper_name,carrier_name,shipment_id,shipper_rate1,carrier_rate1,carrier_unit_qty,shipper_unit_qty,description,begin_datetime,end_datetime
+62624c3e85b437e4a06c726d,518d9941d80f1f0200000002,5918ead7d179d4090000001f,Ceva Ontaro - Yard Moves,DGCarrier,CEV-19295,32.5,20.5,1,1,null,null,null
+62624c3e85b437e4a06c726d,518d9941d80f1f0200000002,5918ead7d179d4090000001f,Ceva Ontaro - Yard Moves,DGCarrier,CEV-19295,31,21.5,1,1,null,null,null
+62624c3e85b437e4a06c726d,518d9941d80f1f0200000002,5918ead7d179d4090000001f,Ceva Ontaro - Yard Moves,DGCarrier,CEV-19295,33.5,23.5,1,1,null,null,null

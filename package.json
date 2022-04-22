@@ -1,0 +1,22 @@
+{
+  "name": "artillery_scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avigyan-undocked/artillery_scripts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avigyan-undocked/artillery_scripts/issues"
+  },
+  "homepage": "https://github.com/avigyan-undocked/artillery_scripts#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}

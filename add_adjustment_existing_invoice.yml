@@ -1,0 +1,61 @@
+config:
+  target: "https://admin-api-acceptance.cargomatic.com"
+  processor: "./processors/PE_scenarios.js"
+  payload:
+    - path: "users.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "username"
+        - "password"
+    - path: "add_adjustment_existing_invoice.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "shipmentid"
+        - "equipmentid"
+        - "message"
+        - "value"
+        - "type"
+  phases:
+    - duration: 01
+      arrivalRate: 01
+      rampTo: 01
+scenarios:
+  - flow:
+      - log: "Get auth token1"
+      - post:
+          url: "/users/login"
+          headers:
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+            referer: "https://command-acceptance.cargomatic.com/"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: $.token
+              as: token
+      - function: getPayload
+      - loop:
+        - think: 5     
+        - log: "Add adjustment invoice"
+        - post:
+            afterResponse: "logResponse"
+            url: "/admin/api/v2/jobs/624c1f1e96f1afe3ad23b2b2/adjustments"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "cargo-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+            json: "{{ payload }}"  
+            capture:
+              - json: $.shipments
+                as: shipments
+        whileTrue: "statusReady"
+              

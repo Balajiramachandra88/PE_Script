@@ -1,0 +1,40 @@
+config:
+  target: "https://admin-api-acceptance.cargomatic.com"
+  payload:
+      path: "users.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "username"
+        - "password"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+scenarios:
+  - flow:
+      - log: "Get auth token"
+      - post:
+          url: "/v2/users/login"
+          headers:
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+            referer: "https://command-acceptance.cargomatic.com/"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: $.refreshToken
+              as: refreshToken
+      - log: "Get Shipment By Customer"
+      - get:
+          url: "/api/jobs/actions/missing-pods?per_page=10&page=1&sort=created_at&sort_dir=desc&start_date=2022-02-27T08%3A28%3A53-08%3A00&end_date=2022-03-01T08%3A28%3A53-08%3A00"
+          headers:
+            authorization: "X-Cargomatic {{ refreshToken }}"
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"

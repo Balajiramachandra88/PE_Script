@@ -1,0 +1,41 @@
+config:
+  target: "https://admin-api-acceptance.cargomatic.com"
+  payload:
+      path: "users.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "username"
+        - "password"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+scenarios:
+  - flow:
+      - log: "Get auth token"
+      - post:
+          url: "/users/login"
+          headers:
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+            referer: "https://command-acceptance.cargomatic.com/"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: $.token
+              as: token
+      - log: "Get Shipment By Destination "
+      - get:
+          url: "/api/v3/jobs?destination%5B0%5D=FER&page=1&per_page=25&_=1645003717274"
+          headers:
+            authorization: "X-Cargomatic {{ token }}"
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+

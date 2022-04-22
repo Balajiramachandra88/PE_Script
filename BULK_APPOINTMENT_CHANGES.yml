@@ -1,0 +1,52 @@
+config:
+  target: "https://admin-api-acceptance.cargomatic.com"
+  processor: "./processors/PE_scenarios.js"
+  payload:
+    - path: "users.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "username"
+        - "password"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      MaxVusers: 1
+scenarios:
+  - flow:
+      - log: "Get auth token"
+      - post:
+          url: "/users/login"
+          headers:
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+            referer: "https://command-acceptance.cargomatic.com/"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: $.token
+              as: token
+      - function: getPayload3
+      - loop:
+        - think: 5     
+        - log: "BULK APPOINTMENT CHANGES"
+        - put:
+            url: "/admin/api/v2/jobs/bulk/stops/appointment"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+            json: "{{ payload3 }}"  
+            capture:
+              - json: $.shipments
+                as: shipments
+        whileTrue: "statusReady"
+              
+

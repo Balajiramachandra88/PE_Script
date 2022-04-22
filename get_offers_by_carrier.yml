@@ -1,0 +1,48 @@
+config:
+  target: "https://admin-api-acceptance.cargomatic.com"
+  processor: "./processors/PE_scenarios.js"
+  payload:
+    - path: "users.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "username"
+        - "password"
+    - path: "add_adjustment_existing_payout.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "carrierid"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      MaxVusers: 1
+scenarios:
+  - flow:
+      - log: "Get auth token"
+      - post:
+          url: "/users/login"
+          headers:
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+            referer: "https://command-acceptance.cargomatic.com/"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: $.token
+              as: token
+      - log: "Get offer by carrier"
+      - get:
+          afterResponse: "logResponse1"
+          url: "/api/v2/marketplace/offers?carrier=518d9941d80f1f0200000002&shipment_type%5B0%5D=drayage&shipment_type%5B1%5D=shorthaul&order.service_type%5B0%5D=drop&order.service_type%5B1%5D=live&_=1644229565232&page=1&per_page=10&sort=offerId&sort_dir=asc"
+          headers:
+            authorization: "X-Cargomatic {{ token }}"
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"

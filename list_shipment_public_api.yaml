@@ -1,0 +1,44 @@
+config:
+  target: "https://cargo-api-acceptance.cargomatic.com"
+  processor: "./processors/list_shipment_public_api.js"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+scenarios:
+  - name: "List Shipment Public API Test"
+    weight: 1
+    flow:
+      - log: "Authentication"
+      - post:
+          url: "/v2/auth"
+          headers:
+            authority: "cargo-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+          json:
+            username: "chandurondla@gmail.com"
+            password: "test1234"
+          capture:
+            - json: $.token
+              as: token
+
+      - function: getPayload
+      - loop:
+        - think: 5     
+        - log: "List Shipment Public API Per Page Count > 250"
+        - get:
+            afterResponse: "logResponse"
+            url: "/v2/shipments?page={{page}}&per_page={{per_page}}"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "cargo-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+            capture:
+              - json: $.shipments
+                as: shipments
+        whileTrue: "statusReady1"

@@ -1,0 +1,40 @@
+config:
+  target: "https://admin-api-acceptance.cargomatic.com"
+  payload:
+      path: "users.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "username"
+        - "password"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+scenarios:
+  - flow:
+      - log: "Get auth token"
+      - post:
+          url: "/users/login"
+          headers:
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+            referer: "https://command-acceptance.cargomatic.com/"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: $.token
+              as: token
+      - log: "Get Invoices By Shipper"
+      - get:
+          url: "/api/v2/shippers/5918ead7d179d4090000001f/invoices?populate%5B0%5D%5Bpath%5D=shipper&populate%5B0%5D%5Bselect%5D=company_name%20email&page=1&page_size=20&sort_by=date_created"
+          headers:
+            authorization: "X-Cargomatic {{ token }}"
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
