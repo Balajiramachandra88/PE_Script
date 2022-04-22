@@ -42,7 +42,7 @@ scenarios:
       - function: getPayload2
       - loop:
         - think: 5     
-        - log: "Add adjustment Payout"
+        - log: "Create Accessorial Request"
         - post:
             afterResponse: "logResponse"
             url: "/api/accessorials/bulk"
@@ -54,9 +54,6 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
             json: "{{ payload2 }}"  
-            capture:
-              - json: $.shipments
-                as: shipments
         whileTrue: "statusReady"
 
             

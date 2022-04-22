@@ -21,7 +21,8 @@ module.exports = {
     getPayload6,
     getPayload7,
     getPayload8,
-    getPayload9
+    getPayload9,
+    statusReady
 }
 
 console.log(Math.floor(100000 + Math.random() * 900000));
@@ -124,45 +125,42 @@ let data2 = [
         "carrier_status": "pending-shipper"
     }
 ]
-
-// function getPayload2(context, events, next) {
-//     _parseCSV().then((jsonObj) => {
-//         console.log("Applying list shipment params", jsonObj);
-//         let newData = data2
-//         newData[0].shipper_rate = jsonObj[0].shipper_rate1.toString()
-//         newData[0].carrier_rate=jsonObj[0].carrier_rate1.toString()
-//         newData[0].shipment=jsonObj[0].shipment.toString()
-//         newData[0].carrier=jsonObj[0].carrierid.toString()
-//         newData[0].shipper=jsonObj[0].shipperid.toString()
-//         context.vars.payload2 = newData;
-//         console.log(newData)
-//         return next();
-//     })
-// }
 function getPayload2(context, events, next) {
     _parseCSV().then((jsonObj)=>{
-        let currentRow = context.vars.currentRow || 0;
+        let currentRow = 0;
         console.log(currentRow, jsonObj.length);
-        let newData = data2 // 1, 3
+        let newData = data2 
+        newData[0].shipper_rate = jsonObj[Number(currentRow)].shipper_rate1.toString()
+        newData[0].carrier_rate=jsonObj[Number(currentRow)].carrier_rate1.toString()
+        newData[0].shipment=jsonObj[Number(currentRow)].shipment.toString()
+        newData[0].carrier=jsonObj[Number(currentRow)].carrierid.toString()
+        newData[0].shipper=jsonObj[Number(currentRow)].shipperid.toString()
+        context.vars.payload2 = newData;
+        console.log("New Transformed Data", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
+}
+
+function statusReady(context, next) {
+    _parseCSV().then((jsonObj)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj.length);
+        let newData = data2
         const continueLooping = currentRow < jsonObj.length;
-        console.log(jsonObj[Number(currentRow)])
         if (continueLooping) {
-           // context.vars.shipNbr = jsonObj[Number(currentRow)].page
             newData[0].shipper_rate = jsonObj[Number(currentRow)].shipper_rate1.toString()
             newData[0].carrier_rate=jsonObj[Number(currentRow)].carrier_rate1.toString()
             newData[0].shipment=jsonObj[Number(currentRow)].shipment.toString()
             newData[0].carrier=jsonObj[Number(currentRow)].carrierid.toString()
             newData[0].shipper=jsonObj[Number(currentRow)].shipperid.toString()
             context.vars.payload2 = newData;
-            console.log(newData)
+            console.log("New Transformed Data", newData)
         }
-        // While `continueLooping` is true, the `next` function will
-        // continue the loop in the test scenario.
         context.vars.currentRow=currentRow+1;
         return next(continueLooping);
     })
 }
-/*BULK_APPOINTMENT_CHANGES*/
 
 let data3 = [
     {
