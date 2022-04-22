@@ -49,15 +49,11 @@ scenarios:
             headers:
               authorization: "Bearer {{ token }}"
               authority: "cargo-api-acceptance.cargomatic.com"
-              accept: "vnd.cargomatic+json;version=1"
               content-type: "application/json"
               sec-fetch-site: "same-site"
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
-            json: "{{ payload7 }}"  
-            capture:
-              - json: $.shipments
-                as: shipments
+            json: "{{ payload7 }}"
         whileTrue: "statusReady2"
 
             

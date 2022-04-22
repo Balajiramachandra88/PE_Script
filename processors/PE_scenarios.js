@@ -537,29 +537,30 @@ let data7 = {
 }
 function getPayload7(context, events, next) {
     _parseCSV1().then((jsonObj1) => {
-    let currentRow = 0;
-    console.log(currentRow,jsonObj1.length);
-    const randomNbr = getRandom();
-    let newData = data7
-    newData.shipment.reference_numbers[0].value=randomNbr
-    newData.shipment.shipment_type = jsonObj1[Number(currentRow)].shipment_type.toString()
-    newData.shipment.shipper=jsonObj1[Number(currentRow)].shipperid.toString()
-    context.vars.payload7 = newData;
-    console.log("booking shipment", newData)
-    context.vars.currentRow=currentRow+1;
-    return next();
+        let currentRow = 0;
+        console.log(currentRow,jsonObj1);
+        const randomNbr = getRandom();
+        let newData = data7
+        newData.shipment.reference_numbers[0].value=randomNbr
+        newData.shipment.shipment_type = jsonObj1[Number(currentRow)].shipment_type.toString()
+        newData.shipment.shipper = jsonObj1[Number(currentRow)].shipperid.toString()
+        context.vars.payload7 = newData;
+        console.log("booking shipment", newData)
+        context.vars.currentRow = currentRow+1;
+        return next();
     })
 }
 
 function statusReady2(context, next) {
+    console.log("Hit status ready")
     _parseCSV1().then((jsonObj1)=>{
         let currentRow = context.vars.currentRow;
-        console.log(currentRow, jsonObj1.length);
+        console.log(currentRow, jsonObj1);
         let newData = data7
         const continueLooping = currentRow < jsonObj1.length;
         if (continueLooping) {
             newData.shipment.shipment_type = jsonObj1[Number(currentRow)].shipment_type.toString()
-            newData.shipment.shipper=jsonObj1[Number(currentRow)].shipperid.toString()
+            newData.shipment.shipper = jsonObj1[Number(currentRow)].shipperid.toString()
             context.vars.payload7 = newData;
             console.log("New Transformed Data", newData)
         }
