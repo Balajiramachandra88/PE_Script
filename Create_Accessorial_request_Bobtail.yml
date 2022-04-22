@@ -41,7 +41,7 @@ scenarios:
               as: token
       - function: getPayload2
       - loop:
-        - think: 5     
+        - think: 10     
         - log: "Create Accessorial Request"
         - post:
             afterResponse: "logResponse"

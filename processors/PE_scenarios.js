@@ -22,7 +22,9 @@ module.exports = {
     getPayload7,
     getPayload8,
     getPayload9,
-    statusReady
+    statusReady,
+    statusReady1,
+    statusReady2
 }
 
 console.log(Math.floor(100000 + Math.random() * 900000));
@@ -162,6 +164,8 @@ function statusReady(context, next) {
     })
 }
 
+
+//* BULK APPOINTMENT CHANGES*// 
 let data3 = [
     {
         "stop_id": "624e79b3ccf19caa60906c44",
@@ -533,14 +537,34 @@ let data7 = {
 }
 function getPayload7(context, events, next) {
     _parseCSV1().then((jsonObj1) => {
-    console.log("Booking Shipment Details",jsonObj1);
+    let currentRow = 0;
+    console.log(currentRow,jsonObj1.length);
     const randomNbr = getRandom();
     let newData = data7
     newData.shipment.reference_numbers[0].value=randomNbr
-    newData.shipment.shipment_type = jsonObj1[0].shipment_type.toString()
-    newData.shipment.shipper=jsonObj1[0].shipperid.toString()
+    newData.shipment.shipment_type = jsonObj1[Number(currentRow)].shipment_type.toString()
+    newData.shipment.shipper=jsonObj1[Number(currentRow)].shipperid.toString()
     context.vars.payload7 = newData;
+    console.log("booking shipment", newData)
+    context.vars.currentRow=currentRow+1;
     return next();
+    })
+}
+
+function statusReady2(context, next) {
+    _parseCSV1().then((jsonObj1)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj1.length);
+        let newData = data7
+        const continueLooping = currentRow < jsonObj1.length;
+        if (continueLooping) {
+            newData.shipment.shipment_type = jsonObj1[Number(currentRow)].shipment_type.toString()
+            newData.shipment.shipper=jsonObj1[Number(currentRow)].shipperid.toString()
+            context.vars.payload7 = newData;
+            console.log("New Transformed Data", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
     })
 }
 
@@ -606,14 +630,50 @@ let data9 = {
         }
     }
 }
-function getPayload9(context, events, next) {
-    console.log("bulk driver assigment");
-    const randomNbr = getRandom();
-    //let newData = data
-    // newData.shipment.reference_numbers[0].value=randomNbr
-    context.vars.payload9 = data9;
-    return next()
+// function getPayload9(context, events, next) {
+//     console.log("bulk driver assigment");
+//     const randomNbr = getRandom();
+//     //let newData = data
+//     // newData.shipment.reference_numbers[0].value=randomNbr
+//     context.vars.payload9 = data9;
+//     return next()
     
+// }
+function getPayload9(context, events, next) {
+    _parseCSV3().then((jsonObj)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj.length);
+        let newData = data9
+        newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid1.toString()
+        // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid2.toString()
+        // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid3.toString()
+        // newData[0].driver._id=jsonObj[Number(currentRow)]._id.toString()
+        // newData[0].driver.driverId._id=jsonObj[Number(currentRow)].carrierData.toString()
+        context.vars.payload9 = newData;
+        console.log("New Transformed Data", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
+}
+
+function statusReady1(context, next) {
+    _parseCSV3().then((jsonObj)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj.length);
+        let newData = data9
+        const continueLooping = currentRow < jsonObj.length;
+        if (continueLooping) {
+            newData[0].shipmentIds = jsonObj[Number(currentRow)].shipmentid1.toString()
+            // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid2.toString()
+            // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid3.toString()
+            // newData[0].driver._id=jsonObj[Number(currentRow)]._id.toString()
+            // newData[0].driver.driverId._id=jsonObj[Number(currentRow)].carrierData.toString()
+            context.vars.payload9 = newData;
+            console.log("BULK DRIVER ASSIGNMENT", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
+    })
 }
 
 

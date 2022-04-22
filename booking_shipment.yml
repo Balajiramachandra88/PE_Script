@@ -58,7 +58,7 @@ scenarios:
             capture:
               - json: $.shipments
                 as: shipments
-        whileTrue: "statusReady"
+        whileTrue: "statusReady2"
 
             
 
