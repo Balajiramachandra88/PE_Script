@@ -77,7 +77,7 @@ function getPayload(context, events, next) {
 }
 
 function statusReady5(context, next) {
-    _parseCSV().then((jsonObj5)=>{
+    _parseCSV5().then((jsonObj5)=>{
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj5.length);
         let newData = data
@@ -138,12 +138,12 @@ function getPayload1(context, events, next) {
 }
 
 function statusReady4(context, next) {
-    _parseCSV().then((jsonObj4)=>{
+    _parseCSV4().then((jsonObj4)=>{
+        console.log("Status Ready executions starts")
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj4.length);
         let newData = data1
         const continueLooping = currentRow < jsonObj4.length;
-        console.log(currentRow,jsonObj4[Number])
         if (continueLooping) {
             newData.adjustment.equipment=jsonObj4[Number(currentRow)].equipmentid.toString()
 			newData.adjustment.message=jsonObj4[Number(currentRow)].message.toString()
@@ -709,7 +709,9 @@ function getPayload9(context, events, next) {
         let currentRow = 0;
         console.log(currentRow, jsonObj3.length);
         let newData = data9
-        newData.shipmentIds=jsonObj3[Number(currentRow)].shipmentid1.toString()
+        newData.shipmentIds[0]=jsonObj3[Number(currentRow)].shipmentid1.toString();
+        newData.shipmentIds[1]=jsonObj3[Number(currentRow)].shipmentid2.toString();
+        newData.shipmentIds[2]=jsonObj3[Number(currentRow)].shipmentid3.toString();
         context.vars.payload9 = newData;
         console.log("Bulk Driver assigment1", newData)
         context.vars.currentRow=currentRow+1;
@@ -721,11 +723,13 @@ function statusReady3(context, next) {
     console.log("bulk driver")
     _parseCSV3().then((jsonObj3)=>{
         let currentRow = context.vars.currentRow;
-        console.log(currentRow, jsonObj3);
+        console.log(currentRow, jsonObj3.length);
         let newData = data9
         const continueLooping = currentRow < jsonObj3.length;
         if (continueLooping) {
-            newData.shipmentIds = jsonObj3[Number(currentRow)].shipmentid1.toString()
+            newData.shipmentIds[0]=jsonObj3[Number(currentRow)].shipmentid1.toString();
+            newData.shipmentIds[1]=jsonObj3[Number(currentRow)].shipmentid2.toString();
+            newData.shipmentIds[2]=jsonObj3[Number(currentRow)].shipmentid3.toString();
             context.vars.payload9 = newData;
             console.log("BULK DRIVER ASSIGNMENT", newData)
         }
