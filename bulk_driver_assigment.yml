@@ -45,8 +45,5 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
             json: "{{ payload9 }}"  
-            capture:
-              - json: $.shipments
-                as: shipments
-        whileTrue: "statusReady1"
+        whileTrue: "statusReady3"
               

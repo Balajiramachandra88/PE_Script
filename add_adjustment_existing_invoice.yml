@@ -8,15 +8,11 @@ config:
       fields:
         - "username"
         - "password"
-    - path: "add_adjustment_existing_invoice.csv"
+    - path: "add_adjustment_existing_invoice_shipmentid.csv"
       order: sequence
       skipHeader: true
       fields:
         - "shipmentid"
-        - "equipmentid"
-        - "message"
-        - "value"
-        - "type"
   phases:
     - duration: 01
       arrivalRate: 01
@@ -42,10 +38,10 @@ scenarios:
       - function: getPayload
       - loop:
         - think: 5     
-        - log: "Add adjustment invoice"
+        - log: "Add adjustment Invoice"
         - post:
             afterResponse: "logResponse"
-            url: "/admin/api/v2/jobs/624c1f1e96f1afe3ad23b2b2/adjustments"
+            url: "/admin/api/v2/jobs/{{shipmentid}}/adjustments"
             headers:
               authorization: "X-Cargomatic {{ token }}"
               authority: "cargo-api-acceptance.cargomatic.com"
@@ -54,8 +50,5 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
             json: "{{ payload }}"  
-            capture:
-              - json: $.shipments
-                as: shipments
-        whileTrue: "statusReady"
+        whileTrue: "statusReady5"
               

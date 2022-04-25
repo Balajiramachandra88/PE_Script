@@ -5,8 +5,8 @@ const csvFilePath = path.dirname(__dirname) + '/excel/Create_Accessorial_request
 const csvFilePath1 = path.dirname(__dirname) + '/excel/Booking_Shipment.csv';
 const csvFilePath2 = path.dirname(__dirname)+'/excel/Offer_Distribution.csv';
 const csvFilePath3 = path.dirname(__dirname)+'/excel/bulk_driver_assigment.csv';
-
-
+const csvFilePath4 = path.dirname(__dirname)+'/excel/add_adjustment_existing_payout.csv';
+const csvFilePath5 = path.dirname(__dirname)+'/excel/add_adjustment_existing_invoice.csv';
 module.exports = {
     getPayload,
     _parseCSV,
@@ -22,9 +22,10 @@ module.exports = {
     getPayload7,
     getPayload8,
     getPayload9,
-    statusReady,
-    statusReady1,
-    statusReady2
+    statusReady3,
+    statusReady2,
+    statusReady4,
+    statusReady5
 }
 
 console.log(Math.floor(100000 + Math.random() * 900000));
@@ -36,6 +37,15 @@ function getRandom() {
     return (string + randomNbr.toString());
 }
 //*ADD ADJUSTMENT TO EXISTING INVOICE *//
+function _parseCSV5() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath5)
+            .then((jsonObj5) => {
+                resolve(jsonObj5)
+            })
+    })
+}
 let data = {
     "adjustment": {
         "adjustedItem": "accessorial",
@@ -51,15 +61,51 @@ let data = {
 }
 
 function getPayload(context, events, next) {
-    console.log("add_adjustment_existing_invoice");
-    const randomNbr = getRandom();
-    //let newData = data
-    // newData.shipment.reference_numbers[0].value=randomNbr
-    context.vars.payload = data;
-    return next();
+    _parseCSV5().then((jsonObj5)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj5.length);
+        let newData = data
+        newData.adjustment.equipment=jsonObj5[Number(currentRow)].equipmentid.toString()
+        newData.adjustment.message=jsonObj5[Number(currentRow)].message.toString()
+        newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
+        newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
+        context.vars.payload = newData;
+        console.log("New Transformed Data", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
+}
+
+function statusReady5(context, next) {
+    _parseCSV().then((jsonObj5)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj5.length);
+        let newData = data
+        const continueLooping = currentRow < jsonObj5.length;
+        if (continueLooping) {
+                newData.adjustment.equipment=jsonObj5[Number(currentRow)].equipmentid.toString()
+				newData.adjustment.message=jsonObj5[Number(currentRow)].message.toString()
+				newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
+				newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
+            context.vars.payload = newData;
+            console.log("New Transformed Data", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
+    })
 }
 
 //*ADD ADJUSTMENT TO EXISTING PAYOUT *//
+function _parseCSV4() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath4)
+            .then((jsonObj4) => {
+                resolve(jsonObj4)
+            })
+    })
+}
+
 let data1 = {
     "adjustment": {
         "adjustedItem": "accessorial",
@@ -76,14 +122,40 @@ let data1 = {
 
 
 function getPayload1(context, events, next) {
-    console.log("add_adjustment_existing_payout");
-    const randomNbr = getRandom();
-    //let newData = data
-    // newData.shipment.reference_numbers[0].value=randomNbr
-    context.vars.payload1 = data1;
-    return next();
+    _parseCSV4().then((jsonObj4)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj4.length);
+        let newData = data1 
+        newData.adjustment.equipment=jsonObj4[Number(currentRow)].equipmentid.toString()
+        newData.adjustment.message=jsonObj4[Number(currentRow)].message.toString()
+        newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
+        newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
+        context.vars.payload1 = newData;
+        console.log("New Transformed Data", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
 }
 
+function statusReady4(context, next) {
+    _parseCSV().then((jsonObj4)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj4.length);
+        let newData = data1
+        const continueLooping = currentRow < jsonObj4.length;
+        console.log(currentRow,jsonObj4[Number])
+        if (continueLooping) {
+            newData.adjustment.equipment=jsonObj4[Number(currentRow)].equipmentid.toString()
+			newData.adjustment.message=jsonObj4[Number(currentRow)].message.toString()
+			newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
+			newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
+            context.vars.payload1 = newData;
+            console.log("New Transformed Data", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
+    })
+}
 
 /*Create_Accessorial_request_Bobtail*/
 function _parseCSV() {
@@ -631,44 +703,29 @@ let data9 = {
         }
     }
 }
-// function getPayload9(context, events, next) {
-//     console.log("bulk driver assigment");
-//     const randomNbr = getRandom();
-//     //let newData = data
-//     // newData.shipment.reference_numbers[0].value=randomNbr
-//     context.vars.payload9 = data9;
-//     return next()
-    
-// }
+
 function getPayload9(context, events, next) {
-    _parseCSV3().then((jsonObj)=>{
+    _parseCSV3().then((jsonObj3)=>{
         let currentRow = 0;
-        console.log(currentRow, jsonObj.length);
+        console.log(currentRow, jsonObj3.length);
         let newData = data9
-        newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid1.toString()
-        // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid2.toString()
-        // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid3.toString()
-        // newData[0].driver._id=jsonObj[Number(currentRow)]._id.toString()
-        // newData[0].driver.driverId._id=jsonObj[Number(currentRow)].carrierData.toString()
+        newData.shipmentIds=jsonObj3[Number(currentRow)].shipmentid1.toString()
         context.vars.payload9 = newData;
-        console.log("New Transformed Data", newData)
+        console.log("Bulk Driver assigment1", newData)
         context.vars.currentRow=currentRow+1;
         return next();
     })
 }
 
-function statusReady1(context, next) {
-    _parseCSV3().then((jsonObj)=>{
+function statusReady3(context, next) {
+    console.log("bulk driver")
+    _parseCSV3().then((jsonObj3)=>{
         let currentRow = context.vars.currentRow;
-        console.log(currentRow, jsonObj.length);
+        console.log(currentRow, jsonObj3);
         let newData = data9
-        const continueLooping = currentRow < jsonObj.length;
+        const continueLooping = currentRow < jsonObj3.length;
         if (continueLooping) {
-            newData[0].shipmentIds = jsonObj[Number(currentRow)].shipmentid1.toString()
-            // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid2.toString()
-            // newData[0].shipmentIds=jsonObj[Number(currentRow)].shipmentid3.toString()
-            // newData[0].driver._id=jsonObj[Number(currentRow)]._id.toString()
-            // newData[0].driver.driverId._id=jsonObj[Number(currentRow)].carrierData.toString()
+            newData.shipmentIds = jsonObj3[Number(currentRow)].shipmentid1.toString()
             context.vars.payload9 = newData;
             console.log("BULK DRIVER ASSIGNMENT", newData)
         }
