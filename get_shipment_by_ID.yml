@@ -8,15 +8,14 @@ config:
       fields:
         - "username"
         - "password"
-    - path: "add_adjustment_existing_payout.csv"
+    - path: "get_shipment_by_ID.csv"
       order: sequence
       skipHeader: true
       fields:
         - "shipmentid"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      MaxVusers: 1
+    - duration: 30
+      arrivalRate: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -36,9 +35,10 @@ scenarios:
             - json: $.token
               as: token
       - log: "Get shipment by id"
+      - think: 5
       - get:
           afterResponse: "logResponse1"
-          url: "/api/v3/jobs/61e65fdca39160229e0ddf9c"
+          url: "/api/v3/jobs/{{ shipmentid }}"
           headers:
             authorization: "X-Cargomatic {{ token }}"
             authority: "admin-api-acceptance.cargomatic.com"

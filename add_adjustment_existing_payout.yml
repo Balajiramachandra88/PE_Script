@@ -14,9 +14,9 @@ config:
       fields:
         - "shipmentid"
   phases:
-    - duration: 01
-      arrivalRate: 01
-      rampTo: 01
+    - duration: 3
+      arrivalRate: 1
+      rampTo: 2
 scenarios:
   - flow:
       - log: "Get auth token1"
@@ -49,6 +49,8 @@ scenarios:
               sec-fetch-site: "same-site"
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
-            json: "{{ payload1 }}"  
-        whileTrue: "statusReady4"
+            json: "{{ payload1 }}" 
+      #  whileTrue: "statusReady4"
+              
+    
               

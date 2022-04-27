@@ -7,6 +7,9 @@ const csvFilePath2 = path.dirname(__dirname)+'/excel/Offer_Distribution.csv';
 const csvFilePath3 = path.dirname(__dirname)+'/excel/bulk_driver_assigment.csv';
 const csvFilePath4 = path.dirname(__dirname)+'/excel/add_adjustment_existing_payout.csv';
 const csvFilePath5 = path.dirname(__dirname)+'/excel/add_adjustment_existing_invoice.csv';
+const csvFilePath6 = path.dirname(__dirname)+'/excel/Bulk_Stop_Complete_With_File_Upload.csv';
+const csvFilePath7 = path.dirname(__dirname)+'/excel/driverassigment.csv';
+const csvFilePath8 = path.dirname(__dirname)+'/excel/bulk_appointment_changes.csv';
 module.exports = {
     getPayload,
     _parseCSV,
@@ -22,10 +25,13 @@ module.exports = {
     getPayload7,
     getPayload8,
     getPayload9,
+    statusReady,
     statusReady3,
     statusReady2,
-    statusReady4,
-    statusReady5
+    statusReady7,
+    statusReady8
+    // statusReady4,
+   // statusReady5
 }
 
 console.log(Math.floor(100000 + Math.random() * 900000));
@@ -76,24 +82,24 @@ function getPayload(context, events, next) {
     })
 }
 
-function statusReady5(context, next) {
-    _parseCSV().then((jsonObj5)=>{
-        let currentRow = context.vars.currentRow;
-        console.log(currentRow, jsonObj5.length);
-        let newData = data
-        const continueLooping = currentRow < jsonObj5.length;
-        if (continueLooping) {
-                newData.adjustment.equipment=jsonObj5[Number(currentRow)].equipmentid.toString()
-				newData.adjustment.message=jsonObj5[Number(currentRow)].message.toString()
-				newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
-				newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
-            context.vars.payload = newData;
-            console.log("New Transformed Data", newData)
-        }
-        context.vars.currentRow=currentRow+1;
-        return next(continueLooping);
-    })
-}
+// function statusReady5(context, next) {
+//     _parseCSV5().then((jsonObj5)=>{
+//         let currentRow = context.vars.currentRow;
+//         console.log(currentRow, jsonObj5.length);
+//         let newData = data
+//         const continueLooping = currentRow < jsonObj5.length;
+//         if (continueLooping) {
+//                 newData.adjustment.equipment=jsonObj5[Number(currentRow)].equipmentid.toString()
+// 				newData.adjustment.message=jsonObj5[Number(currentRow)].message.toString()
+// 				newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
+// 				newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
+//             context.vars.payload = newData;
+//             console.log("New Transformed Data", newData)
+//         }
+//         context.vars.currentRow=currentRow+1;
+//         return next(continueLooping);
+//     })
+// }
 
 //*ADD ADJUSTMENT TO EXISTING PAYOUT *//
 function _parseCSV4() {
@@ -137,25 +143,25 @@ function getPayload1(context, events, next) {
     })
 }
 
-function statusReady4(context, next) {
-    _parseCSV().then((jsonObj4)=>{
-        let currentRow = context.vars.currentRow;
-        console.log(currentRow, jsonObj4.length);
-        let newData = data1
-        const continueLooping = currentRow < jsonObj4.length;
-        console.log(currentRow,jsonObj4[Number])
-        if (continueLooping) {
-            newData.adjustment.equipment=jsonObj4[Number(currentRow)].equipmentid.toString()
-			newData.adjustment.message=jsonObj4[Number(currentRow)].message.toString()
-			newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
-			newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
-            context.vars.payload1 = newData;
-            console.log("New Transformed Data", newData)
-        }
-        context.vars.currentRow=currentRow+1;
-        return next(continueLooping);
-    })
-}
+// function statusReady4(context, next) {
+//     _parseCSV4().then((jsonObj4)=>{
+//         let currentRow = context.vars.currentRow;
+//         console.log(currentRow, jsonObj4.length);
+//         let newData = data1
+//         const continueLooping = currentRow < jsonObj4.length;
+//         console.log(currentRow,jsonObj4[Number])
+//         if (continueLooping) {
+//             newData.adjustment.equipment=jsonObj4[Number(currentRow)].equipmentid.toString()
+// 			newData.adjustment.message=jsonObj4[Number(currentRow)].message.toString()
+// 			newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
+// 			newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
+//             context.vars.payload1 = newData;
+//             console.log("New Transformed Data", newData)
+//         }
+//         context.vars.currentRow=currentRow+1;
+//         return next(continueLooping);
+//     })
+// }
 
 /*Create_Accessorial_request_Bobtail*/
 function _parseCSV() {
@@ -238,6 +244,16 @@ function statusReady(context, next) {
 
 
 //* BULK APPOINTMENT CHANGES*// 
+function _parseCSV8() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath8)
+            .then((jsonObj8) => {
+                resolve(jsonObj8)
+            })
+    })
+}
+
 let data3 = [
     {
         "stop_id": "624e79b3ccf19caa60906c44",
@@ -261,16 +277,61 @@ let data3 = [
     }
 ]
 
+// function getPayload3(context, events, next) {
+//     console.log("BULK_APPOINTMENT_CHANGES");
+//     const randomNbr = getRandom();
+//     //let newData = data
+//     // newData.shipment.reference_numbers[0].value=randomNbr
+//     context.vars.payload3 = data3;
+//     return next();
+// }
+
 function getPayload3(context, events, next) {
-    console.log("BULK_APPOINTMENT_CHANGES");
-    const randomNbr = getRandom();
-    //let newData = data
-    // newData.shipment.reference_numbers[0].value=randomNbr
-    context.vars.payload3 = data3;
-    return next();
+    _parseCSV8().then((jsonObj8)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj8.length);
+        let newData = data3
+        newData[0].stop_id = jsonObj8[Number(currentRow)].stop_id.toString()
+        newData[0].job_id = jsonObj8[Number(currentRow)].job_id.toString()
+        newData[1].stop_id = jsonObj8[Number(currentRow)].stop_id1.toString()
+        newData[1].job_id = jsonObj8[Number(currentRow)].job_id1.toString()
+        context.vars.payload3 = newData;
+        console.log("BULK_APPOINTMENT_CHANGES", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
+}
+
+function statusReady8(context, next) {
+    _parseCSV8().then((jsonObj8)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj8.length);
+        let newData = data3
+        const continueLooping = currentRow < jsonObj8.length;
+        if (continueLooping) {
+            newData[0].stop_id = jsonObj8[Number(currentRow)].stop_id.toString()
+            newData[0].job_id = jsonObj8[Number(currentRow)].job_id.toString()
+            newData[1].stop_id = jsonObj8[Number(currentRow)].stop_id1.toString()
+            newData[1].job_id = jsonObj8[Number(currentRow)].job_id1.toString()
+            context.vars.payload3 = newData;
+            console.log("New BULK_APPOINTMENT_CHANGES Data", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
+    })
 }
 
 /*Bulk_Stop_Complete_With_File_Upload*/
+
+function _parseCSV6() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath6)
+            .then((jsonObj6) => {
+                resolve(jsonObj6)
+            })
+    })
+}
 
 let data4 = [
     {
@@ -301,26 +362,70 @@ let data4 = [
 ]
 
 function getPayload4(context, events, next) {
-    console.log("Bulk_Stop_Complete_With_File_Upload");
-    const randomNbr = getRandom();
-    //let newData = data
-    // newData.shipment.reference_numbers[0].value=randomNbr
-    context.vars.payload4 = data4;
-    return next();
+    _parseCSV6().then((jsonObj6)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj6.length);
+        let newData = data4 
+        newData[0].job_id = jsonObj6[Number(currentRow)].job_id.toString()
+        newData[0].stop_id = jsonObj6[Number(currentRow)].stop_id.toString()
+        context.vars.payload4 = newData;
+        console.log("Bulk_Stop_Complete_With_File_Upload", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
 }
+// function getPayload4(context, events, next) {
+//     console.log("Bulk_Stop_Complete_With_File_Upload");
+//     const randomNbr = getRandom();
+//     //let newData = data
+//     // newData.shipment.reference_numbers[0].value=randomNbr
+//     context.vars.payload4 = data4;
+//     return next();
+// }
 
 /*driverassigment*/
+
+function _parseCSV7() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath7)
+            .then((jsonObj7) => {
+                resolve(jsonObj7)
+            })
+    })
+}
 
 let data5 = { "driverId": "55025cdc02ca450f00000019", "_type": "Driver" }
 
 function getPayload5(context, events, next) {
-    console.log("driverassigment");
-    const randomNbr = getRandom();
-    //let newData = data
-    // newData.shipment.reference_numbers[0].value=randomNbr
-    context.vars.payload5 = data5;
-    return next();
+    _parseCSV7().then((jsonObj7)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj7.length);
+        let newData = data5
+        newData.driverId = jsonObj7[Number(currentRow)].driverId.toString()
+        context.vars.payload5 = newData;
+        console.log("driverassigment", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
 }
+
+function statusReady7(context, next) {
+    _parseCSV7().then((jsonObj7)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj7.length);
+        let newData = data5
+        const continueLooping = currentRow < jsonObj7.length;
+        if (continueLooping) {
+            newData.driverId = jsonObj7[Number(currentRow)].driverId.toString()
+            context.vars.payload5 = newData;
+            console.log("driverassigment", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
+    })
+}
+
 
 /**/
 let data6 = {

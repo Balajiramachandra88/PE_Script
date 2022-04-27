@@ -1,12 +1,17 @@
 config:
   target: "https://admin-api-acceptance.cargomatic.com"
   payload:
-      path: "users.csv"
+    - path: "Get_invoice_shipper_users.csv"
       order: sequence
       skipHeader: true
       fields:
         - "username"
         - "password"
+    - path: "Get_Invoice_By_Shipper.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "shipper"
   phases:
     - duration: 1
       arrivalRate: 1
@@ -30,7 +35,7 @@ scenarios:
               as: token
       - log: "Get Invoices By Shipper"
       - get:
-          url: "/api/v2/shippers/5918ead7d179d4090000001f/invoices?populate%5B0%5D%5Bpath%5D=shipper&populate%5B0%5D%5Bselect%5D=company_name%20email&page=1&page_size=20&sort_by=date_created"
+          url: "/api/v2/shippers/{{ shipper }}/invoices?populate%5B0%5D%5Bpath%5D=shipper&populate%5B0%5D%5Bselect%5D=company_name%20email&page=1&page_size=20&sort_by=date_created"
           headers:
             authorization: "X-Cargomatic {{ token }}"
             authority: "admin-api-acceptance.cargomatic.com"

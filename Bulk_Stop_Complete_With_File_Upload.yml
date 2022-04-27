@@ -8,15 +8,6 @@ config:
       fields:
         - "username"
         - "password"
-    - path: "add_adjustment_existing_payout.csv"
-      order: sequence
-      skipHeader: true
-      fields:
-        - "shipmentid"
-        - "equipmentid"
-        - "message"
-        - "value"
-        - "type"
   phases:
     - duration: 1
       arrivalRate: 1
@@ -54,8 +45,5 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
             json: "{{ payload4 }}"  
-            capture:
-              - json: $.shipments
-                as: shipments
-        whileTrue: "statusReady"
+
         

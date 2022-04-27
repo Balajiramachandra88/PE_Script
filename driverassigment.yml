@@ -8,19 +8,14 @@ config:
       fields:
         - "username"
         - "password"
-    - path: "add_adjustment_existing_payout.csv"
+    - path: "driverassignment_shipmnetid.csv"
       order: sequence
       skipHeader: true
       fields:
         - "shipmentid"
-        - "equipmentid"
-        - "message"
-        - "value"
-        - "type"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      MaxVusers: 1
+    - duration: 2
+      arrivalRate: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -44,7 +39,7 @@ scenarios:
         - think: 5     
         - log: "Driverassigment_details"
         - post:
-            url: "/api/v2/jobs/62500c93400bdad95048c7b8/driver"
+            url: "/api/v2/jobs/{{ shipmentid }}/driver"
             headers:
               authorization: "X-Cargomatic {{ token }}"
               authority: "admin-api-acceptance.cargomatic.com"
@@ -54,8 +49,5 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
             json: "{{ payload5 }}"  
-            capture:
-              - json: $.shipments
-                as: shipments
-        whileTrue: "statusReady"
+        whileTrue: "statusReady7"
         
