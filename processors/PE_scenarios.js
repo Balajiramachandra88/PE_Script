@@ -10,6 +10,7 @@ const csvFilePath5 = path.dirname(__dirname)+'/excel/add_adjustment_existing_inv
 const csvFilePath6 = path.dirname(__dirname)+'/excel/Bulk_Stop_Complete_With_File_Upload.csv';
 const csvFilePath7 = path.dirname(__dirname)+'/excel/driverassigment.csv';
 const csvFilePath8 = path.dirname(__dirname)+'/excel/bulk_appointment_changes.csv';
+const csvFilePath9 = path.dirname(__dirname)+'/excel/bulk_accessorials.csv';
 module.exports = {
     getPayload,
     _parseCSV,
@@ -25,11 +26,13 @@ module.exports = {
     getPayload7,
     getPayload8,
     getPayload9,
+    getPayload10,
     statusReady,
     statusReady3,
     statusReady2,
     statusReady7,
-    statusReady8
+    statusReady8,
+    statusReady9
     // statusReady4,
    // statusReady5
 }
@@ -838,7 +841,128 @@ function statusReady3(context, next) {
         return next(continueLooping);
     })
 }
+/*BULK Accessorials */
+function _parseCSV9() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath9)
+            .then((jsonObj9) => {
+                resolve(jsonObj9)
+            })
+    })
+}
+let data10 = [
+    {
+        "shipper_rate": "30.50",
+        "carrier_rate": "27.25",
+        "carrier_unit_qty": 1,
+        "shipper_unit_qty": 1,
+        "description": null,
+        "begin_datetime": null,
+        "end_datetime": null,
+        "location": "",
+        "note": "",
+        "equipment": [
+            "61c102b3b1190f0db07dcdca"
+        ],
+        "message": "Bobtail",
+        "accessorial_type": "bobtail",
+        "type": "accessorial",
+        "exception_type": "Accessorial Request",
+		"shipment":"626941f17071f6bd20bc96c1",
+		"carrier":"518d9941d80f1f0200000002",
+		"shipper":"5918ead7d179d4090000001f",
+        "shipper_name": "Ceva Ontaro - Yard Moves",
+        "carrier_name": "DGCarrier",
+        "payee_type": "carrier",
+        "vendor_name": "",
+        "vendor": null,
+        "shipment_id": "CEV-19462",
+        "shipper_status": "pending-shipper",
+        "carrier_status": "pending-shipper"
+    },
+	{
+      "shipper_rate":"20.00",
+      "carrier_rate":"13.00",
+      "carrier_unit_qty":1,
+      "shipper_unit_qty":1,
+      "description":null,
+      "begin_datetime":null,
+      "end_datetime":null,
+      "location":"",
+      "note":"",
+      "equipment":[
+         "61c102b3b1190f0db07dcdca"
+      ],
+      "message":"Cleaning",
+      "accessorial_type":"cleaning",
+      "type":"accessorial",
+      "exception_type":"Accessorial Request",
+      "shipment":"626941f17071f6bd20bc96c1",
+      "carrier":"518d9941d80f1f0200000002",
+      "shipper":"5918ead7d179d4090000001f",
+      "shipper_name":"Ceva Ontaro - Yard Moves",
+      "carrier_name":"DGCarrier",
+      "payee_type":"carrier",
+      "vendor_name":"",
+      "vendor":null,
+      "shipment_id":"CEV-19462",
+      "shipper_status":"pending-shipper",
+      "carrier_status":"pending-shipper"
+   }
+]
 
+function getPayload10(context, events, next) {
+    _parseCSV9().then((jsonObj9)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj9.length);
+        let newData = data10
+        newData[0].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate.toString()
+        newData[0].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate.toString()
+        newData[0].shipment=jsonObj9[Number(currentRow)].shipment.toString()
+        newData[0].carrier=jsonObj9[Number(currentRow)].carrierid.toString()
+        newData[0].shipper=jsonObj9[Number(currentRow)].shipperid.toString()
+        newData[0].shipment_id=jsonObj9[Number(currentRow)].shipmentid.toString()
+        newData[1].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate1.toString()
+        newData[1].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate1.toString()
+        newData[1].shipment=jsonObj9[Number(currentRow)].shipment1.toString()
+        newData[1].carrier=jsonObj9[Number(currentRow)].carrierid1.toString()
+        newData[1].shipper=jsonObj9[Number(currentRow)].shipperid1.toString()
+        newData[1].shipment_id=jsonObj9[Number(currentRow)].shipmentid1.toString()
+        context.vars.payload10 = newData;
+        console.log("bulk_accessorials", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
+}
+
+function statusReady9(context, next) {
+    console.log("bulk driver")
+    _parseCSV9().then((jsonObj9)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj9);
+        let newData = data10
+        const continueLooping = currentRow < jsonObj9.length;
+        if (continueLooping) {
+            newData[0].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate.toString()
+            newData[0].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate.toString()
+            newData[0].shipment=jsonObj9[Number(currentRow)].shipment.toString()
+            newData[0].carrier=jsonObj9[Number(currentRow)].carrierid.toString()
+            newData[0].shipper=jsonObj9[Number(currentRow)].shipperid.toString()
+            newData[0].shipment_id=jsonObj9[Number(currentRow)].shipmentid.toString()
+            newData[1].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate1.toString()
+            newData[1].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate1.toString()
+            newData[1].shipment=jsonObj9[Number(currentRow)].shipment1.toString()
+            newData[1].carrier=jsonObj9[Number(currentRow)].carrierid1.toString()
+            newData[1].shipper=jsonObj9[Number(currentRow)].shipperid1.toString()
+            newData[1].shipment_id=jsonObj9[Number(currentRow)].shipmentid1.toString()
+            context.vars.payload10 = newData;
+            console.log("bulk_accessorials", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
+    })
+}
 
 function logResponse(requestParams, response, context, ee, next) {
     const parsedResponse = JSON.parse(response.body);

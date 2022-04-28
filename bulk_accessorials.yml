@@ -8,12 +8,18 @@ config:
       fields:
         - "username"
         - "password"
+    - path: "add_adjustment_existing_payout_Shipmentid.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "shipmentid"
   phases:
-    - duration: 2
+    - duration: 30
       arrivalCount: 2
+      rampTo: 2
 scenarios:
   - flow:
-      - log: "Get auth token"
+      - log: "Get auth token1"
       - post:
           url: "/users/login"
           headers:
@@ -29,19 +35,22 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - function: getPayload3
+      - function: getPayload10
       - loop:
-        - think: 1  
-        - log: "BULK APPOINTMENT CHANGES"
-        - put:
-            url: "/admin/api/v2/jobs/bulk/stops/appointment"
+        - think: 5     
+        - log: "bulk_accessorials"
+        - post:
+            afterResponse: "logResponse"
+            url: "/api/accessorials/bulk"
             headers:
               authorization: "X-Cargomatic {{ token }}"
-              authority: "admin-api-acceptance.cargomatic.com"
+              authority: "cargo-api-acceptance.cargomatic.com"
               content-type: "application/json"
               sec-fetch-site: "same-site"
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
-            json: "{{ payload3 }}"  
-        whileTrue: "statusReady8"
+            json: "{{ payload10 }}" 
+        whileTrue: "statusReady9"
+              
+    
               
