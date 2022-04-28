@@ -817,7 +817,9 @@ function getPayload9(context, events, next) {
         let currentRow = 0;
         console.log(currentRow, jsonObj3.length);
         let newData = data9
-        newData.shipmentIds=jsonObj3[Number(currentRow)].shipmentid1.toString()
+        newData.shipmentIds[0]=jsonObj3[Number(currentRow)].shipmentid1.toString();
+        newData.shipmentIds[1]=jsonObj3[Number(currentRow)].shipmentid2.toString();
+        newData.shipmentIds[2]=jsonObj3[Number(currentRow)].shipmentid3.toString();
         context.vars.payload9 = newData;
         console.log("Bulk Driver assigment1", newData)
         context.vars.currentRow=currentRow+1;
@@ -829,11 +831,13 @@ function statusReady3(context, next) {
     console.log("bulk driver")
     _parseCSV3().then((jsonObj3)=>{
         let currentRow = context.vars.currentRow;
-        console.log(currentRow, jsonObj3);
+        console.log(currentRow, jsonObj3.length);
         let newData = data9
         const continueLooping = currentRow < jsonObj3.length;
         if (continueLooping) {
-            newData.shipmentIds = jsonObj3[Number(currentRow)].shipmentid1.toString()
+            newData.shipmentIds[0]=jsonObj3[Number(currentRow)].shipmentid1.toString();
+            newData.shipmentIds[1]=jsonObj3[Number(currentRow)].shipmentid2.toString();
+            newData.shipmentIds[2]=jsonObj3[Number(currentRow)].shipmentid3.toString();
             context.vars.payload9 = newData;
             console.log("BULK DRIVER ASSIGNMENT", newData)
         }
