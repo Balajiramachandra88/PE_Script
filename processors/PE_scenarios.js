@@ -3,7 +3,7 @@ const csv = require('csvtojson')
 const fs = require('fs')
 const csvFilePath = path.dirname(__dirname) + '/excel/Create_Accessorial_request.csv';
 const csvFilePath1 = path.dirname(__dirname) + '/excel/Booking_Shipment.csv';
-const csvFilePath2 = path.dirname(__dirname)+'/excel/Offer_Distribution.csv';
+const csvFilePath2 = path.dirname(__dirname)+'/excel/Offer_Distribution1.csv';
 const csvFilePath3 = path.dirname(__dirname)+'/excel/bulk_driver_assigment.csv';
 const csvFilePath4 = path.dirname(__dirname)+'/excel/add_adjustment_existing_payout.csv';
 const csvFilePath5 = path.dirname(__dirname)+'/excel/add_adjustment_existing_invoice.csv';
@@ -37,7 +37,7 @@ module.exports = {
    // statusReady5
 }
 
-console.log(Math.floor(100000 + Math.random() * 900000));
+//console.log(Math.floor(100000 + Math.random() * 900000));
 
 
 function getRandom() {

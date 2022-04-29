@@ -20,6 +20,7 @@ scenarios:
   - flow:
       - log: "Get auth token"
       - post:
+          afterResponse: "logResponse"
           url: "/users/login"
           headers:
             authority: "admin-api-acceptance.cargomatic.com"

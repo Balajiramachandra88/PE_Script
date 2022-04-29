@@ -10,11 +10,12 @@ config:
         - "password"
   phases:
     - duration: 20
-      arrivalCount: 2
+      arrivalCount: 3
 scenarios:
   - flow:
       - log: "Get auth token"
       - post:
+          afterResponse: "logResponse"
           url: "/users/login"
           headers:
             authority: "admin-api-acceptance.cargomatic.com"
