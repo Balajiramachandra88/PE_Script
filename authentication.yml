@@ -2,17 +2,12 @@ config:
   target: "https://admin-api-acceptance.cargomatic.com"
   processor: "./processors/PE_scenarios.js"
   payload:
-    - path: "Get_offer_carrier_users.csv"
+    - path: "authentication.csv"
       order: sequence
       skipHeader: true
       fields:
         - "username"
         - "password"
-    - path: "get_payouts_by_carrier.csv"
-      order: sequence
-      skipHeader: true
-      fields:
-        - "carrierid"
   phases:
     - duration: 20
       arrivalCount: 2
@@ -34,14 +29,3 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get payout By carrier"
-      - get:
-          afterResponse: "logResponse1"
-          url: "/api/v2/carriers/{{ carrierid }}/payouts?page=1&page_size=20&sort_by=date_created&sort%5Bkey%5D=due_date&sort%5Border%5D=desc&sort%5Bkey%5D=due_date&sort%5Border%5D=desc"
-          headers:
-            authorization: "X-Cargomatic {{ token }}"
-            authority: "admin-api-acceptance.cargomatic.com"
-            content-type: "application/json"
-            sec-fetch-site: "same-site"
-            sec-fetch-mode: "cors"
-            sec-fetch-dest: "empty"

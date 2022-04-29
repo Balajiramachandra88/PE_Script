@@ -18,9 +18,8 @@ config:
         - "value"
         - "type"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      MaxVusers: 1
+    - duration: 10
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"

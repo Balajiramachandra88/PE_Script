@@ -15,7 +15,7 @@ config:
         - "shipmentid"
   phases:
     - duration: 30
-      arrivalRate: 2
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"

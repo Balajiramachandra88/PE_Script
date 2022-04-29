@@ -2,20 +2,20 @@ config:
   target: "https://admin-api-acceptance.cargomatic.com"
   processor: "./processors/PE_scenarios.js"
   payload:
-    - path: "Get_offer_carrier_users.csv"
+    - path: "users.csv"
       order: sequence
       skipHeader: true
       fields:
         - "username"
         - "password"
-    - path: "get_payouts_by_carrier.csv"
+    - path: "get_shipment_by_refNbr.csv"
       order: sequence
       skipHeader: true
       fields:
-        - "carrierid"
+        - "refNumber"
   phases:
-    - duration: 20
-      arrivalCount: 2
+    - duration: 60
+      arrivalCount: 4
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -34,10 +34,11 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get payout By carrier"
+      - log: "Get shipment by Reference Number"
+      - think: 1
       - get:
           afterResponse: "logResponse1"
-          url: "/api/v2/carriers/{{ carrierid }}/payouts?page=1&page_size=20&sort_by=date_created&sort%5Bkey%5D=due_date&sort%5Border%5D=desc&sort%5Bkey%5D=due_date&sort%5Border%5D=desc"
+          url: "/api/v3/jobs?reference%5B0%5D={{ refNumber }}-&deliver_after%5B0%5D=2022-02-01T08%3A00%3A00.000Z&deliver_by%5B0%5D=2022-02-17T07%3A59%3A59.999Z&page=1&per_page=25&_=1645002950612"
           headers:
             authorization: "X-Cargomatic {{ token }}"
             authority: "admin-api-acceptance.cargomatic.com"

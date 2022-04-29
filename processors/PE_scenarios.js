@@ -263,8 +263,8 @@ let data3 = [
         "job_id": "624e79b8ccf19caa60906c7e",
         "updates": {
             "appointment": false,
-            "window_start": "2022-02-04T08:00:00.000Z",
-            "window_end": "2022-02-04T11:00:00.000Z",
+            "window_start": "2022-04-29T08:00:00.000Z",
+            "window_end": "2022-04-29T11:00:00.000Z",
             "appointment_unconfirmed": false
         }
     },
@@ -273,8 +273,8 @@ let data3 = [
         "job_id": "624e79b8ccf19caa60906c7e",
         "updates": {
             "appointment": false,
-            "window_start": "2022-02-03T08:00:00.000Z",
-            "window_end": "2022-02-03T09:00:00.000Z",
+            "window_start": "2022-04-29T08:00:00.000Z",
+            "window_end": "2022-04-29T09:00:00.000Z",
             "appointment_unconfirmed": false
         }
     }

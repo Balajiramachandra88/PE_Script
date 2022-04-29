@@ -14,9 +14,8 @@ config:
       fields:
         - "shipmentid"
   phases:
-    - duration: 2
-      arrivalRate: 1
-      rampTo: 1
+    - duration: 20
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token1"
@@ -37,7 +36,7 @@ scenarios:
               as: token
       - function: getPayload
       - loop:
-        - think: 5     
+        - think: 1    
         - log: "Add adjustment Invoice"
         - post:
             afterResponse: "logResponse"

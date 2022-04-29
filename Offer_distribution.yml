@@ -14,9 +14,8 @@ config:
       fields:
         - "shipmentid"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      MaxVusers: 1
+    - duration: 30
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -37,7 +36,7 @@ scenarios:
               as: token
       - function: getPayload8
       - loop:
-        - think: 5     
+        - think: 1
         - log: "Offer Distribution"
         - post:
             afterResponse: "logResponse"
