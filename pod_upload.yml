@@ -1,5 +1,6 @@
 config:
   target: "https://admin-api-acceptance.cargomatic.com"
+  processor: "./processors/POD.js"
   payload:
     - path: "users.csv"
       order: sequence
@@ -35,7 +36,9 @@ scenarios:
               as: token
       - log: "POD file upload"
       - post:
+          beforeRequest: 'setJSONBody' 
           url: "/api/v2/jobs/626a92dd0fce344d561caaa2/stops/626a92d80fce344d561ca8b8/uploads"
+          afterResponse: "logResponse"
           headers:
             authorization: "Bearer {{ token }}"
             authority: "admin-api-acceptance.cargomatic.com"
@@ -43,7 +46,5 @@ scenarios:
             sec-fetch-site: "same-site"
             sec-fetch-mode: "cors"
             sec-fetch-dest: "empty"
-          formData:
-            name="file";
-            filename= "D:\PE\Attachment\JPG\1_CEV-19556_JPG_202104280241.jpg"
+
             
