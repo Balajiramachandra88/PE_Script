@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const FormData = require('form-data');
 
 module.exports = {
   setJSONBody,
@@ -8,10 +9,10 @@ module.exports = {
 
 function setJSONBody(requestParams, context, ee, next) {
     console.log(path.dirname(__dirname) + '/JPG/1_CEV-19556_JPG_202104280241.jpg')
-    const formData = {
-      file: fs.createReadStream(path.dirname(__dirname) + '/JPG/1_CEV-19556_JPG_202104280241.jpg'),
-    };
-    requestParams.formData = Object.assign({}, requestParams.formData, formData);
+    const formData = new FormData();
+    formData.append('file', fs.createReadStream(path.dirname(__dirname) + '/JPG/1_CEV-19556_JPG_202104280241.jpg'));
+    requestParams.body = formData;
+    console.log('[DEBUG] Request: ', requestParams);
     return next();
   }
 

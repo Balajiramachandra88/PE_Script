@@ -42,7 +42,6 @@ scenarios:
           headers:
             authorization: "Bearer {{ token }}"
             authority: "admin-api-acceptance.cargomatic.com"
-            Content-Type: multipart/form-data
             sec-fetch-site: "same-site"
             sec-fetch-mode: "cors"
             sec-fetch-dest: "empty"

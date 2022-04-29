@@ -18,6 +18,7 @@
   "homepage": "https://github.com/avigyan-undocked/artillery_scripts#readme",
   "dependencies": {
     "artillery-plugin-metrics-by-endpoint": "^1.0.2",
-    "csvtojson": "^2.0.10"
+    "csvtojson": "^2.0.10",
+    "form-data": "^4.0.0"
   }
 }
