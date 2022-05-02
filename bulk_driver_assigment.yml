@@ -9,9 +9,8 @@ config:
         - "username"
         - "password"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      MaxVusers: 1
+    - duration: 20
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -32,7 +31,7 @@ scenarios:
               as: token
       - function: getPayload9
       - loop:
-        - think: 5     
+        - think: 1    
         - log: "BULK Driver Assigment"
         - put:
             url: "/api/v2/jobs/bulk/driver"

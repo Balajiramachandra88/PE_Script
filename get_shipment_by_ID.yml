@@ -9,13 +9,14 @@ config:
         - "username"
         - "password"
     - path: "get_shipment_by_ID.csv"
-      order: sequence
+      order: iterate
       skipHeader: true
       fields:
         - "shipmentid"
   phases:
-    - duration: 30
-      arrivalCount: 2
+    - duration: 1
+      arrivalRate: 1
+      rampUp: 1
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -36,7 +37,7 @@ scenarios:
             - json: $.token
               as: token
       - log: "Get shipment by id"
-      - think: 5
+      - think: 1
       - get:
           afterResponse: "logResponse1"
           url: "/api/v3/jobs/{{ shipmentid }}"

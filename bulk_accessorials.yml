@@ -16,7 +16,6 @@ config:
   phases:
     - duration: 30
       arrivalCount: 2
-      rampTo: 2
 scenarios:
   - flow:
       - log: "Get auth token1"
@@ -37,7 +36,7 @@ scenarios:
               as: token
       - function: getPayload10
       - loop:
-        - think: 5     
+        - think: 1    
         - log: "bulk_accessorials"
         - post:
             afterResponse: "logResponse"
