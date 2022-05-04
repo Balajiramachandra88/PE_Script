@@ -1,22 +1,56 @@
-const fs = require('fs');
-const path = require('path');
-const FormData = require('form-data');
+const fs = require("fs");
+const path = require("path");
+const FormData = require("form-data");
 
 module.exports = {
   setJSONBody,
   logResponse,
-}
+  setPODUploadJSONbody,
+};
 
 function setJSONBody(requestParams, context, ee, next) {
-    console.log(path.dirname(__dirname) + '/JPG/1_CEV-19556_JPG_202104280241.jpg')
-    const formData = new FormData();
-    formData.append('file', fs.createReadStream(path.dirname(__dirname) + '/JPG/1_CEV-19556_JPG_202104280241.jpg'));
-    requestParams.body = formData;
-    console.log('[DEBUG] Request: ', requestParams);
-    return next();
-  }
+  console.log(
+    path.dirname(__dirname) + "/JPG/1_CEV-19556_JPG_202104280241.jpg"
+  );
+  const formData = new FormData();
+  formData.append(
+    "file",
+    fs.createReadStream(
+      path.dirname(__dirname) + "/JPG/1_CEV-19556_JPG_202104280241.jpg"
+    )
+  );
+  requestParams.body = formData;
+  console.log("[DEBUG] Request: Added FormData to request body");
+  return next();
+}
 
 function logResponse(requestParams, response, context, ee, next) {
-  console.log('[DEBUG] Response: ', response.body);
+  console.log("[DEBUG] Response: ", context.vars.key, context.vars.key1);
   return next();
+}
+
+function setPODUploadJSONbody(requestParams, context, ee, next) {
+  const payload = {
+    shipmentId: "626fb4adf59059e96b036dad",
+    stopId: "626fb4a8f59059e96b036d44",
+    meta: {
+      signatory: "Test",
+      date: "2022-04-28T07:55:00.000Z",
+      reason: {
+        code: "31",
+        _id: "6154c65549f1fd00a2506d4e",
+        description: "CookieJar",
+      },
+      reasonCode: "31",
+      reasonDescription: "CookieJar",
+      timezone: "America/Los_Angeles",
+      containerId: "TEST7856322",
+      fields: {
+        uri: context.vars.key1,
+        type: "shipmentdata",
+      },
+      imageMetadataFiles: context.vars.key,
+    },
+  };
+  requestParams.body = JSON.stringify(payload);
 }

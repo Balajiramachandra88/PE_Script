@@ -14,8 +14,8 @@ config:
       fields:
         - "carrierid"
   phases:
-    - duration: 30
-      arrivalCount: 2
+    - duration: 5
+      arrivalCount: 1
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -34,8 +34,7 @@ scenarios:
           capture:
             - json: $.token
               as: token
-afterResponse:
-  - flow:
+              
       - log: "POD file upload"
       - post:
           beforeRequest: 'setJSONBody' 
@@ -48,39 +47,40 @@ afterResponse:
             sec-fetch-mode: "cors"
             sec-fetch-dest: "empty"
           capture:
-            - json: $.result.files.succeeded[0].key
+            - json: $.files.succeeded[0].key
               as: key
-            - json: $.result.shipmentdataFiles.succeeded[0].key
+            - json: $.shipmentdataFiles.succeeded[0].key
               as: key1
+
       - log: "POD Complete"
       - post:
-            url: "/api/v3/stops/complete"
-            afterResponse: "logResponse"
-            headers:
-              authorization: "Bearer {{ token }}"
-              authority: "admin-api-acceptance.cargomatic.com"
-              content-type: "application/json"
-              sec-fetch-site: "same-site"
-              sec-fetch-mode: "cors"
-              sec-fetch-dest: "empty"
-            json: 
-              shipmentId: "626fb4adf59059e96b036dad"
-              stopId: "626fb4a8f59059e96b036d44"
-              meta:
-                signatory: "Test"
-                date: "2022-04-28T07:55:00.000Z"
-                reason:
-                  code: "31"
-                  _id: "6154c65549f1fd00a2506d4e"
-                  description: "CookieJar"
-                reasonCode: "31"
-                reasonDescription: "CookieJar"
-                timezone: "America/Los_Angeles"
-                containerId: "TEST7856322"
-                fields:
-                  uri: "2022/04/f59d02b76d81b67bd5ba73d5efaa893c.jpg"
-                  type: "shipmentdata"
-                imageMetadataFiles:
-                  "520ee773-0c39-4eac-ba32-d8d4a3a7cabf.jpg"
+          url: "/api/v3/stops/complete"
+          afterResponse: "logResponse"
+          headers:
+            authorization: "Bearer {{ token }}"
+            authority: "admin-api-acceptance.cargomatic.com"
+            content-type: "application/json"
+            sec-fetch-site: "same-site"
+            sec-fetch-mode: "cors"
+            sec-fetch-dest: "empty"
+          json: 
+            shipmentId: "626fb4adf59059e96b036dad"
+            stopId: "626fb4a8f59059e96b036d44"
+            meta:
+              signatory: "Test"
+              date: "2022-04-28T07:55:00.000Z"
+              reason:
+                code: "31"
+                _id: "6154c65549f1fd00a2506d4e"
+                description: "CookieJar"
+              reasonCode: "31"
+              reasonDescription: "CookieJar"
+              timezone: "America/Los_Angeles"
+              containerId: "TEST7856322"
+              fields:
+                uri: "2022/04/f59d02b76d81b67bd5ba73d5efaa893c.jpg"
+                type: "shipmentdata"
+              imageMetadataFiles:
+                "520ee773-0c39-4eac-ba32-d8d4a3a7cabf.jpg"
 
             
