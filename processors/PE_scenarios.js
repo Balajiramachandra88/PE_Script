@@ -1129,11 +1129,11 @@ function getPayload11(context, events, next) {
         let currentRow = 0;
         console.log(currentRow, jsonObj11.length);
         let newData = data11
-        newData.accessorials._id = jsonObj11[Number(currentRow)]._id.toString()
-        newData.accessorials.equipment[0]= jsonObj11[Number(currentRow)].equipment.toString()
-        newData.accessorials.equipment_id[0]= jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials.message = jsonObj11[Number(currentRow)].message.toString()
-        newData.accessorials.accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
+        newData.accessorials[0]._id = jsonObj11[Number(currentRow)]._id.toString()
+        newData.accessorials[0].equipment[0]= jsonObj11[Number(currentRow)].equipment.toString()
+        newData.accessorials[0].equipment_id[0]= jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].message = jsonObj11[Number(currentRow)].message.toString()
+        newData.accessorials[0].accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
         context.vars.payload11 = newData;
         console.log("Accessorial resolve-status accept/decline", newData)
         context.vars.currentRow=currentRow+1;
@@ -1149,11 +1149,11 @@ function statusReady10(context, next) {
         let newData = data11
         const continueLooping = currentRow < jsonObj11.length;
         if (continueLooping) {
-            newData.accessorials._id = jsonObj11[Number(currentRow)]._id.toString()
-            newData.accessorials.equipment = jsonObj11[Number(currentRow)].equipment.toString()
-            newData.accessorials.equipment_id = jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials.message = jsonObj11[Number(currentRow)].message.toString()
-            newData.accessorials.accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
+            newData.accessorials[0]._id = jsonObj11[Number(currentRow)]._id.toString()
+            newData.accessorials[0].equipment = jsonObj11[Number(currentRow)].equipment.toString()
+            newData.accessorials[0].equipment_id = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].message = jsonObj11[Number(currentRow)].message.toString()
+            newData.accessorials[0].accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
             context.vars.payload11 = newData;
             console.log("Accessorial resolve-status accept/decline", newData)
         }

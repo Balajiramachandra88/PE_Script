@@ -13,9 +13,9 @@ config:
       skipHeader: true
       fields:
         - "carrierid"
-  phases:
-    - duration: 5
-      arrivalCount: 1
+  # phases:
+  #   - duration: 5
+  #     arrivalCount: 1
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -51,9 +51,10 @@ scenarios:
               as: key
             - json: $.shipmentdataFiles.succeeded[0].key
               as: key1
-      - function: setPODUploadJSONbody
+              
       - log: "POD Complete"
       - post:
+          beforeRequest: 'setPODUploadJSONbody'
           url: "/api/v3/stops/complete"
           afterResponse: "logResponse"
           headers:
