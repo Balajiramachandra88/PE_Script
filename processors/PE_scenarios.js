@@ -11,6 +11,8 @@ const csvFilePath6 = path.dirname(__dirname)+'/excel/Bulk_Stop_Complete_With_Fil
 const csvFilePath7 = path.dirname(__dirname)+'/excel/driverassigment.csv';
 const csvFilePath8 = path.dirname(__dirname)+'/excel/bulk_appointment_changes.csv';
 const csvFilePath9 = path.dirname(__dirname)+'/excel/bulk_accessorials.csv';
+const csvFilePath11 = path.dirname(__dirname)+'/excel/approve_accessorial.csv';
+
 module.exports = {
     getPayload,
     _parseCSV,
@@ -27,12 +29,15 @@ module.exports = {
     getPayload8,
     getPayload9,
     getPayload10,
+    getPayload11,
     statusReady,
     statusReady3,
     statusReady2,
     statusReady7,
     statusReady8,
-    statusReady9
+    statusReady9,
+    statusReady10
+    
     // statusReady4,
    // statusReady5
 }
@@ -967,6 +972,196 @@ function statusReady9(context, next) {
         return next(continueLooping);
     })
 }
+
+/* Accessorial resolve-status accept/decline */
+function _parseCSV11() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath11)
+            .then((jsonObj11) => {
+                resolve(jsonObj11)
+            })
+    })
+}
+let data11 = {
+    "accessorials": [
+        {
+            "_id": "627247344dc5c64bff92488b",
+            "_type": "accessorial",
+            "payee_type": "carrier",
+            "carrier_status": "pending-shipper",
+            "shipper_status": "pending-shipper",
+            "carrier_unit_qty": 1,
+            "shipper_unit_qty": 1,
+            "equipment": [
+                "61c102b3b1190f0db07dcdca"
+            ],
+            "equipment_id": [
+                "TEST7856322"
+            ],
+            "resolved": false,
+            "shipper_rate": 30.50,
+            "carrier_rate": 27.25,
+            "description": null,
+            "begin_datetime": null,
+            "end_datetime": null,
+            "location": "",
+            "note": "",
+            "message": "Cleaning",
+            "accessorial_type": "cleaning",
+            "type": "accessorial",
+            "exception_type": "Accessorial Request",
+            "shipment": {
+                "_id": "6213682096349f0dfbf64ebf",
+                "equipments": [
+                    "TEST7856322",
+                    "TEST7856322"
+                ],
+                "reference_numbers": [
+                    {
+                        "editable": true,
+                        "hidden": false,
+                        "primary": false,
+                        "_id": "6213682096349f0dfbf64ec2",
+                        "name": "master_bol",
+                        "value": "BLGS04052739",
+                        "optimized": "BLGS04052739"
+                    },
+                    {
+                        "editable": true,
+                        "hidden": false,
+                        "primary": false,
+                        "_id": "6213682096349f0dfbf64ec3",
+                        "name": "order_id",
+                        "value": "ORD-6706",
+                        "optimized": "ORD-6706"
+                    },
+                    {
+                        "editable": true,
+                        "hidden": false,
+                        "primary": false,
+                        "_id": "6213682096349f0dfbf64ec4",
+                        "name": "order_id",
+                        "value": "ORD-6706",
+                        "optimized": "ORD-6706"
+                    },
+                    {
+                        "editable": true,
+                        "hidden": false,
+                        "primary": false,
+                        "_id": "6213682096349f0dfbf64ec5",
+                        "name": "scac_code",
+                        "value": "CevaOntarioYardMoves",
+                        "optimized": "CEVAONTARIOYARDMOVES"
+                    },
+                    {
+                        "editable": false,
+                        "hidden": false,
+                        "primary": false,
+                        "_id": "6213682096349f0dfbf64ec6",
+                        "name": "shipment_id",
+                        "value": "CEV-19644",
+                        "optimized": "CEV-19644"
+                    },
+                    {
+                        "editable": true,
+                        "hidden": false,
+                        "primary": false,
+                        "_id": "621369b996349f0dfbf64f3d",
+                        "name": "equipment_id",
+                        "value": "TEST7856322",
+                        "optimized": "TEST7856322"
+                    },
+                    {
+                        "editable": true,
+                        "hidden": false,
+                        "primary": false,
+                        "_id": "62136b6496349f0dfbf64f86",
+                        "name": "equipment_id",
+                        "value": "TEST7856322",
+                        "optimized": "TEST7856322"
+                    }
+                ],
+                "carrier": "518d9941d80f1f0200000002",
+                "shipper": "5918ead7d179d4090000001f",
+                "order_type": "import",
+                "shipment_id": "CEV-19644"
+            },
+            "carrier": "518d9941d80f1f0200000002",
+            "shipper": "5918ead7d179d4090000001f",
+            "shipper_name": "Ceva Ontaro - Yard Moves",
+            "carrier_name": "DGCarrier",
+            "vendor_name": "",
+            "vendor": null,
+            "shipment_id": "CEV-19644",
+            "action_required": "Awaiting Shipper Response",
+            "history": [
+                {
+                    "_id": "6213985196349f0dfbf6586b",
+                    "email": "admin@cargomatic.com",
+                    "author": "Admin Admin",
+                    "authorType": "Admin",
+                    "message": "Shipper Notified\nShipper Rate Per Unit: $30.50\nUnits: 1\nShipper Total: $30.50\nCarrier Rate Per Unit: $27.25\nUnits: 1\nCarrier Total: $27.25",
+                    "timestamp": "2022-02-21T13:49:05.439Z"
+                }
+            ],
+            "shipper_begin_datetime": null,
+            "shipper_end_datetime": null,
+            "shipper_location": "",
+            "shipper_description": null,
+            "documents": [],
+            "created_at": "2022-02-21T13:49:05.443Z",
+            "modified_at": "2022-02-21T13:49:05.443Z",
+            "expire_at": "9999-12-31T00:00:00.000Z",
+            "shipper_rate": 30.50,
+            "carrier_rate": 27.25,
+            "__v": 0,
+            "approveCarrier": true,
+            "approveShipper": true
+        }
+    ],
+    "resolution_type": "approve",
+    "sendEmail": true
+}
+
+function getPayload11(context, events, next) {
+    _parseCSV11().then((jsonObj11)=>{
+        let currentRow = 0;
+        console.log(currentRow, jsonObj11.length);
+        let newData = data11
+        newData.accessorials._id = jsonObj11[Number(currentRow)]._id.toString()
+        newData.accessorials.equipment[0]= jsonObj11[Number(currentRow)].equipment.toString()
+        newData.accessorials.equipment_id[0]= jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials.message = jsonObj11[Number(currentRow)].message.toString()
+        newData.accessorials.accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
+        context.vars.payload11 = newData;
+        console.log("Accessorial resolve-status accept/decline", newData)
+        context.vars.currentRow=currentRow+1;
+        return next();
+    })
+}
+
+function statusReady10(context, next) {
+    console.log("bulk driver")
+    _parseCSV9().then((jsonObj11)=>{
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj11);
+        let newData = data11
+        const continueLooping = currentRow < jsonObj11.length;
+        if (continueLooping) {
+            newData.accessorials._id = jsonObj11[Number(currentRow)]._id.toString()
+            newData.accessorials.equipment = jsonObj11[Number(currentRow)].equipment.toString()
+            newData.accessorials.equipment_id = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials.message = jsonObj11[Number(currentRow)].message.toString()
+            newData.accessorials.accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
+            context.vars.payload11 = newData;
+            console.log("Accessorial resolve-status accept/decline", newData)
+        }
+        context.vars.currentRow=currentRow+1;
+        return next(continueLooping);
+    })
+}
+
 
 function logResponse(requestParams, response, context, ee, next) {
     const parsedResponse = JSON.parse(response.body);
