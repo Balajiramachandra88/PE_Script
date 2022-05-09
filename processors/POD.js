@@ -31,8 +31,8 @@ function logResponse(requestParams, response, context, ee, next) {
 
 function setPODUploadJSONbody(requestParams, context, ee, next) {
   const payload = {
-    shipmentId: "626a92dd0fce344d561caaa2",
-    stopId: "626a92d80fce344d561ca8b8",
+    shipmentId: "6272400a4dc5c64bff921bd5",
+    stopId: "627240054dc5c64bff921b5e",
     meta: {
       signatory: "Test",
       date: "2022-04-28T07:55:00.000Z",

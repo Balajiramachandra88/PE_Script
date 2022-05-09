@@ -1,2 +1,5 @@
-_id,equipment,equipment_id,message,accessorial_type,Master_Ref,order_nbr,carrierid,shipperid,shipper_rate,carrier_rate
-62728dbe0c91bb05753c2267,61c102b3b1190f0db07dcdca,Bobtail,bobtail,TEST7856322,BLGS04052739,ORD-6706,518d9941d80f1f0200000002,5918ead7d179d4090000001f
+_id,equipment,equipment_id,message,accessorial_type,Master_Ref,order_nbr,shipmentid,carrierid,shipperid,shipper_rate,carrier_rate
+6273a3b9cdea826ea657f476,61c102b3b1190f0db07dcdca,TEST7856322,Bobtail,bobtail,BLGS04052739,ORD-6706,CEV-19644,518d9941d80f1f0200000002,5918ead7d179d4090000001f,30,20
+6273a3cb653cca59aae8e1f0,61c102b3b1190f0db07dcdca,TEST7856322,Cleaning,cleaning,BLGS04052739,ORD-6706,CEV-19644,518d9941d80f1f0200000002,5918ead7d179d4090000001f,16,11
+
+

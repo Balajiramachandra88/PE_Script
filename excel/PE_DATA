@@ -1,0 +1,108 @@
+bulk_appointment_changes
+https://command-acceptance.cargomatic.com/shipments/626aa5d60fce344d561d5dcb
+https://command-acceptance.cargomatic.com/shipments/626aa5d60fce344d561d5ea7
+https://command-acceptance.cargomatic.com/shipments/626aa5d6f1e0200d94b02690
+
+stop_id,job_id,stop_id1,job_id1
+626aa5d20fce344d561d5d5a,626aa5d60fce344d561d5dcb,626aa5d20fce344d561d5d50,626aa5d60fce344d561d5dcb
+626aa5d20fce344d561d5d63,626aa5d60fce344d561d5dcb,626aa5d20fce344d561d5d60,626aa5d60fce344d561d5ea7
+626aa5d20fce344d561d5d55,626aa5d60fce344d561d5ea7,626aa5d20fce344d561d5d5d,626aa5d60fce344d561d5ea7
+626aa5d2f1e0200d94b02654,626aa5d6f1e0200d94b02690,626aa5d2f1e0200d94b02657,626aa5d6f1e0200d94b02690
+
+bulk_driver_assigment
+55025cdc02ca450f00000019,518d9941d80f1f0200000002
+https://command-acceptance.cargomatic.com/shipments/626b6e2f01b7eba5f5b4212f
+https://command-acceptance.cargomatic.com/shipments/626b6e2f01b7eba5f5b421ba
+
+https://command-acceptance.cargomatic.com/shipments/626b6e2f01b7eba5f5b4217a
+https://command-acceptance.cargomatic.com/shipments/626b6e2f01b7eba5f5b42124
+https://command-acceptance.cargomatic.com/shipments/626b6e2f01b7eba5f5b4213a
+
+https://command-acceptance.cargomatic.com/shipments/626b6e3083c4121b6a2df410
+https://command-acceptance.cargomatic.com/shipments/626b6e2f83c4121b6a2df2aa
+https://command-acceptance.cargomatic.com/shipments/626b6e2f83c4121b6a2df337
+https://command-acceptance.cargomatic.com/shipments/626b6e3083c4121b6a2df47a
+
+
+626b6e2f01b7eba5f5b4212f,626b6e2f01b7eba5f5b421ba,626b6e2f01b7eba5f5b4217a,518d9941d80f1f0200000002
+626b6e2f01b7eba5f5b42124,626b6e2f01b7eba5f5b4213a,626b6e3083c4121b6a2df410,518d9941d80f1f0200000002
+626b6e2f83c4121b6a2df2aa,626b6e2f83c4121b6a2df337,626b6e3083c4121b6a2df47a,518d9941d80f1f0200000002
+
+
+
+bulk_accessorials
+
+https://command-acceptance.cargomatic.com/shipments/626b826b54d26d1c32e37a8c
+https://command-acceptance.cargomatic.com/shipments/626b826a815e1e94ce774603
+
+
+shipper_rate,carrier_rate,shipment,carrierid,shipperid,shipmentid,shipper_rate1,carrier_rate1,shipment1,carrierid1,shipperid1,shipmentid1
+31,25,626b826b54d26d1c32e37a8c,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19583,20,13,626b826b54d26d1c32e37a8c,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19583
+32,26,626b826b54d26d1c32e37a8c,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19583,21,14,626b826b54d26d1c32e37a8c,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19583
+33,27,626b826b54d26d1c32e37a8c,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19583,22,15,626b826b54d26d1c32e37a8c,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19583
+31,25,626b826a815e1e94ce774603,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19582,20,13,626b826a815e1e94ce774603,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19582
+32,26,626b826a815e1e94ce774603,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19582,21,14,626b826a815e1e94ce774603,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19582
+33,27,626b826a815e1e94ce774603,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19582,22,15,626b826a815e1e94ce774603,518d9941d80f1f0200000002,5918ead7d179d4090000001f,CEV-19582
+
+add_adjustment_existing_invoice.yml
+
+https://command-acceptance.cargomatic.com/shipments/626b8b5f54d26d1c32e3bea7
+
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Shipper Cost Adjustment,53,shipper_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Shipper Cost Adjustment,54,shipper_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Shipper Cost Adjustment,55,shipper_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Shipper Cost Adjustment,56,shipper_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Shipper Cost Adjustment,57,shipper_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Shipper Cost Adjustment,58,shipper_cost
+
+
+
+add_adjustment_existing_payout
+
+https://command-acceptance.cargomatic.com/shipments/626b8b5f54d26d1c32e3bea7
+
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Carrier Cost Adjustment,31,carrier_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Carrier Cost Adjustment1,30,carrier_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Carrier Cost Adjustment1,32,carrier_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Carrier Cost Adjustment,33,carrier_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Carrier Cost Adjustment1,34,carrier_cost
+626b8b5f54d26d1c32e3bea7,61c102b3b1190f0db07dcdca,Carrier Cost Adjustment1,35,carrier_cost
+
+
+=================================================================================================================
+
+
+bulk_appointment_changes
+
+
+https://command-acceptance.cargomatic.com/shipments/6278b003c6c387b9a64e2328
+https://command-acceptance.cargomatic.com/shipments/6278b017c6c387b9a64e3093
+
+stop_id,job_id,stop_id1,job_id1
+6278b001c6c387b9a64e22b6,6278b003c6c387b9a64e2328,6278b001c6c387b9a64e22b1,6278b003c6c387b9a64e2328
+6278b001c6c387b9a64e22b9,6278b003c6c387b9a64e2328,6278b016c6c387b9a64e3024,6278b017c6c387b9a64e3093
+6278b016c6c387b9a64e301e,6278b017c6c387b9a64e3093,6278b016c6c387b9a64e3021,6278b017c6c387b9a64e3093
+
+
+bulk_driver_assigment
+
+https://command-acceptance.cargomatic.com/shipments/6278b404c6c387b9a64e54da
+https://command-acceptance.cargomatic.com/shipments/6278b608c6c387b9a64e73fa
+https://command-acceptance.cargomatic.com/shipments/6278b605ed8f0d6463935afa
+
+https://command-acceptance.cargomatic.com/shipments/6278b6d6c6c387b9a64e809a
+https://command-acceptance.cargomatic.com/shipments/6278b6e0c6c387b9a64e8507
+https://command-acceptance.cargomatic.com/shipments/6278b6ebc6c387b9a64e8983
+
+
+https://command-acceptance.cargomatic.com/shipments/6278b6f8c6c387b9a64e8e13
+https://command-acceptance.cargomatic.com/shipments/6278b702c6c387b9a64e927c
+https://command-acceptance.cargomatic.com/shipments/6278b70fed8f0d6463936871
+
+6278b404c6c387b9a64e54da,6278b608c6c387b9a64e73fa,6278b605ed8f0d6463935afa,518d9941d80f1f0200000002
+6278b6d6c6c387b9a64e809a,6278b6e0c6c387b9a64e8507,6278b6ebc6c387b9a64e8983,518d9941d80f1f0200000002
+6278b6f8c6c387b9a64e8e13,6278b702c6c387b9a64e927c,6278b70fed8f0d6463936871,518d9941d80f1f0200000002
+
+bulk_accessorials
+
+

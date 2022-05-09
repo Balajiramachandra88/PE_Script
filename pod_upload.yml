@@ -13,9 +13,9 @@ config:
       skipHeader: true
       fields:
         - "carrierid"
-  # phases:
-  #   - duration: 5
-  #     arrivalCount: 1
+  phases:
+     - duration: 5
+       arrivalCount: 1
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -38,7 +38,7 @@ scenarios:
       - log: "POD file upload"
       - post:
           beforeRequest: 'setJSONBody' 
-          url: "/api/v2/jobs/626fb4adf59059e96b036dad/stops/626fb4a8f59059e96b036d44/uploads"
+          url: "/api/v2/jobs/6272400a4dc5c64bff921bd5/stops/627240054dc5c64bff921b5e/uploads"
           afterResponse: "logResponse"
           headers:
             authorization: "Bearer {{ token }}"
@@ -58,8 +58,9 @@ scenarios:
           url: "/api/v3/stops/complete"
           afterResponse: "logResponse"
           headers:
-            authorization: "Bearer {{ token }}"
+            authorization: "Bearer "
             authority: "admin-api-acceptance.cargomatic.com"
+            accept: "vnd.cargomatic+json;version=1"
             content-type: "application/json"
             sec-fetch-site: "same-site"
             sec-fetch-mode: "cors"
