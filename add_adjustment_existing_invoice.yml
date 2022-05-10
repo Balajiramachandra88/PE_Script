@@ -14,8 +14,8 @@ config:
       fields:
         - "shipmentid"
   phases:
-    - duration: 20
-      arrivalCount: 2
+    - duration: 1
+      arrivalCount: 1
 scenarios:
   - flow:
       - log: "Get auth token1"
