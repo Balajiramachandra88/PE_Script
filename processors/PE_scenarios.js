@@ -1166,7 +1166,7 @@ function getPayload11(context, events, next) {
 
 function statusReady10(context, next) {
     console.log("bulk driver")
-    _parseCSV9().then((jsonObj11)=>{
+    _parseCSV11().then((jsonObj11)=>{
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj11);
         let newData = data11
@@ -1214,6 +1214,7 @@ function logResponse(requestParams, response, context, ee, next) {
     console.log(parsedResponse);
     return next(); // MUST be called for the scenario to continue
 }
+
 function logResponse1(requestParams, response, context, ee, next) {
     const parsedResponse = JSON.parse(response.body);
     console.log(parsedResponse);
