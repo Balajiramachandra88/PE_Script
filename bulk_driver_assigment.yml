@@ -33,7 +33,7 @@ scenarios:
       - loop:
         - think: 1    
         - log: "BULK Driver Assigment"
-        - put:
+        - post:
             url: "/api/v2/jobs/bulk/driver"
             headers:
               authorization: "X-Cargomatic {{ token }}"
