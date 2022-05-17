@@ -34,17 +34,18 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - function: getPayload3
+      - function: getPayload12
       - loop:
         - think: 1  
         - log: "Get Invoices By Shipper"
         - get:
-          afterResponse: "logResponse"
-          url: "/api/v2/shippers/{{ shipper }}/invoices?populate%5B0%5D%5Bpath%5D=shipper&populate%5B0%5D%5Bselect%5D=company_name%20email&page=1&page_size=20&sort_by=date_created"
-          headers:
-            authorization: "X-Cargomatic {{ token }}"
-            authority: "admin-api-acceptance.cargomatic.com"
-            content-type: "application/json"
-            sec-fetch-site: "same-site"
-            sec-fetch-mode: "cors"
-            sec-fetch-dest: "empty"
+            afterResponse: "logResponse"
+            url: "{{ urlEndPoint }}"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+        whileTrue: "statusReady11"

@@ -1233,10 +1233,9 @@ function getPayload12(context, events, next) {
     _parseCSV12().then((jsonObj12) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj12.length);
-        let newData = data12
-        newData.adjustment.equipment = jsonObj12[Number(currentRow)].equipmentid.toString()
-        context.vars.payload12 = newData;
-        console.log("Get Invoice By Shipper", newData)
+        let newURL = formatUrl(jsonObj12[Number(currentRow)].shipper.toString())
+        context.vars.urlEndPoint = newURL;
+        console.log("New URL", context.vars.urlEndPoint)
         context.vars.currentRow = currentRow + 1;
         return next();
     })
@@ -1246,12 +1245,11 @@ function statusReady11(context, next) {
     _parseCSV12().then((jsonObj12) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj12.length);
-        let newData = data
         const continueLooping = currentRow < jsonObj12.length;
         if (continueLooping) {
-            newData.adjustment.equipment = jsonObj12[Number(currentRow)].equipmentid.toString()
-            context.vars.payload = newData;
-            console.log("Get Invoice By Shipper", newData)
+            let newURL = formatUrl(jsonObj12[Number(currentRow)].shipper.toString())
+            context.vars.urlEndPoint = newURL;
+            console.log("New URL", context.vars.urlEndPoint)
         }
         context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
