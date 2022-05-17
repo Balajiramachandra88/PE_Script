@@ -82,6 +82,10 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             1,
             0,
             0,
@@ -89,18 +93,14 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0,
@@ -152,9 +152,9 @@
             0
           ],
           "count": 2,
-          "minKey": 253,
-          "maxKey": 380,
-          "offset": 253
+          "minKey": 261,
+          "maxKey": 388,
+          "offset": 261
         },
         "negativeStore": {
           "chunkSize": 128,
@@ -166,9 +166,9 @@
         },
         "zeroCount": 0,
         "count": 2,
-        "min": 514,
-        "max": 597,
-        "sum": 1111
+        "min": 662,
+        "max": 869,
+        "sum": 1531
       },
       "vusers.session_length": {
         "mapping": {
@@ -312,9 +312,9 @@
             0
           ],
           "count": 1,
-          "minKey": 336,
-          "maxKey": 463,
-          "offset": 336
+          "minKey": 353,
+          "maxKey": 480,
+          "offset": 353
         },
         "negativeStore": {
           "chunkSize": 128,
@@ -326,46 +326,46 @@
         },
         "zeroCount": 0,
         "count": 1,
-        "min": 2974.2663,
-        "max": 2974.2663,
-        "sum": 2974.2663
+        "min": 4139.839,
+        "max": 4139.839,
+        "sum": 4139.839
       }
     },
     "rates": {
       "http.request_rate": 1
     },
     "http.request_rate": null,
-    "firstCounterAt": 1651507103731,
-    "firstHistogramAt": 1651507105150,
-    "lastCounterAt": 1651507106705,
-    "lastHistogramAt": 1651507106705,
-    "firstMetricAt": 1651507103731,
-    "lastMetricAt": 1651507106705,
-    "period": 1651507100000,
+    "firstCounterAt": 1652284541566,
+    "firstHistogramAt": 1652284543149,
+    "lastCounterAt": 1652284545706,
+    "lastHistogramAt": 1652284545706,
+    "firstMetricAt": 1652284541566,
+    "lastMetricAt": 1652284545706,
+    "period": 1652284540000,
     "summaries": {
       "http.response_time": {
-        "min": 514,
-        "max": 597,
+        "min": 662,
+        "max": 869,
         "count": 2,
-        "p50": 518.1,
-        "median": 518.1,
-        "p75": 518.1,
-        "p90": 518.1,
-        "p95": 518.1,
-        "p99": 518.1,
-        "p999": 518.1
+        "p50": 658.6,
+        "median": 658.6,
+        "p75": 658.6,
+        "p90": 658.6,
+        "p95": 658.6,
+        "p99": 658.6,
+        "p999": 658.6
       },
       "vusers.session_length": {
-        "min": 2974.3,
-        "max": 2974.3,
+        "min": 4139.8,
+        "max": 4139.8,
         "count": 1,
-        "p50": 2951.9,
-        "median": 2951.9,
-        "p75": 2951.9,
-        "p90": 2951.9,
-        "p95": 2951.9,
-        "p99": 2951.9,
-        "p999": 2951.9
+        "p50": 4147.4,
+        "median": 4147.4,
+        "p75": 4147.4,
+        "p90": 4147.4,
+        "p95": 4147.4,
+        "p99": 4147.4,
+        "p999": 4147.4
       }
     }
   },
@@ -453,6 +453,10 @@
               0,
               0,
               0,
+              0,
+              0,
+              0,
+              0,
               1,
               0,
               0,
@@ -460,18 +464,14 @@
               0,
               0,
               0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
               1,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
               0,
               0,
               0,
@@ -523,9 +523,9 @@
               0
             ],
             "count": 2,
-            "minKey": 253,
-            "maxKey": 380,
-            "offset": 253
+            "minKey": 261,
+            "maxKey": 388,
+            "offset": 261
           },
           "negativeStore": {
             "chunkSize": 128,
@@ -537,9 +537,9 @@
           },
           "zeroCount": 0,
           "count": 2,
-          "min": 514,
-          "max": 597,
-          "sum": 1111
+          "min": 662,
+          "max": 869,
+          "sum": 1531
         },
         "vusers.session_length": {
           "mapping": {
@@ -683,9 +683,9 @@
               0
             ],
             "count": 1,
-            "minKey": 336,
-            "maxKey": 463,
-            "offset": 336
+            "minKey": 353,
+            "maxKey": 480,
+            "offset": 353
           },
           "negativeStore": {
             "chunkSize": 128,
@@ -697,46 +697,46 @@
           },
           "zeroCount": 0,
           "count": 1,
-          "min": 2974.2663,
-          "max": 2974.2663,
-          "sum": 2974.2663
+          "min": 4139.839,
+          "max": 4139.839,
+          "sum": 4139.839
         }
       },
       "rates": {
         "http.request_rate": 1
       },
       "http.request_rate": null,
-      "firstCounterAt": 1651507103731,
-      "firstHistogramAt": 1651507105150,
-      "lastCounterAt": 1651507106705,
-      "lastHistogramAt": 1651507106705,
-      "firstMetricAt": 1651507103731,
-      "lastMetricAt": 1651507106705,
-      "period": "1651507100000",
+      "firstCounterAt": 1652284541566,
+      "firstHistogramAt": 1652284543149,
+      "lastCounterAt": 1652284545706,
+      "lastHistogramAt": 1652284545706,
+      "firstMetricAt": 1652284541566,
+      "lastMetricAt": 1652284545706,
+      "period": "1652284540000",
       "summaries": {
         "http.response_time": {
-          "min": 514,
-          "max": 597,
+          "min": 662,
+          "max": 869,
           "count": 2,
-          "p50": 518.1,
-          "median": 518.1,
-          "p75": 518.1,
-          "p90": 518.1,
-          "p95": 518.1,
-          "p99": 518.1,
-          "p999": 518.1
+          "p50": 658.6,
+          "median": 658.6,
+          "p75": 658.6,
+          "p90": 658.6,
+          "p95": 658.6,
+          "p99": 658.6,
+          "p999": 658.6
         },
         "vusers.session_length": {
-          "min": 2974.3,
-          "max": 2974.3,
+          "min": 4139.8,
+          "max": 4139.8,
           "count": 1,
-          "p50": 2951.9,
-          "median": 2951.9,
-          "p75": 2951.9,
-          "p90": 2951.9,
-          "p95": 2951.9,
-          "p99": 2951.9,
-          "p999": 2951.9
+          "p50": 4147.4,
+          "median": 4147.4,
+          "p75": 4147.4,
+          "p90": 4147.4,
+          "p95": 4147.4,
+          "p99": 4147.4,
+          "p999": 4147.4
         }
       }
     }

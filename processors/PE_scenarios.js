@@ -3,15 +3,16 @@ const csv = require('csvtojson')
 const fs = require('fs')
 const csvFilePath = path.dirname(__dirname) + '/excel/Create_Accessorial_request.csv';
 const csvFilePath1 = path.dirname(__dirname) + '/excel/Booking_Shipment.csv';
-const csvFilePath2 = path.dirname(__dirname)+'/excel/Offer_Distribution1.csv';
-const csvFilePath3 = path.dirname(__dirname)+'/excel/bulk_driver_assigment.csv';
-const csvFilePath4 = path.dirname(__dirname)+'/excel/add_adjustment_existing_payout.csv';
-const csvFilePath5 = path.dirname(__dirname)+'/excel/add_adjustment_existing_invoice.csv';
-const csvFilePath6 = path.dirname(__dirname)+'/excel/Bulk_Stop_Complete_With_File_Upload.csv';
-const csvFilePath7 = path.dirname(__dirname)+'/excel/driverassigment.csv';
-const csvFilePath8 = path.dirname(__dirname)+'/excel/bulk_appointment_changes.csv';
-const csvFilePath9 = path.dirname(__dirname)+'/excel/bulk_accessorials.csv';
-const csvFilePath11 = path.dirname(__dirname)+'/excel/approve_accessorial.csv';
+const csvFilePath2 = path.dirname(__dirname) + '/excel/Offer_Distribution1.csv';
+const csvFilePath3 = path.dirname(__dirname) + '/excel/bulk_driver_assigment.csv';
+const csvFilePath4 = path.dirname(__dirname) + '/excel/add_adjustment_existing_payout.csv';
+const csvFilePath5 = path.dirname(__dirname) + '/excel/add_adjustment_existing_invoice.csv';
+const csvFilePath6 = path.dirname(__dirname) + '/excel/Bulk_Stop_Complete_With_File_Upload.csv';
+const csvFilePath7 = path.dirname(__dirname) + '/excel/driverassigment.csv';
+const csvFilePath8 = path.dirname(__dirname) + '/excel/bulk_appointment_changes.csv';
+const csvFilePath9 = path.dirname(__dirname) + '/excel/bulk_accessorials.csv';
+const csvFilePath11 = path.dirname(__dirname) + '/excel/approve_accessorial.csv';
+const csvFilePath12 = path.dirname(__dirname) + '/excel/Get_Invoice_By_Shipper.csv';
 
 module.exports = {
     getPayload,
@@ -30,16 +31,20 @@ module.exports = {
     getPayload9,
     getPayload10,
     getPayload11,
+    getPayload12,
     statusReady,
     statusReady3,
+    statusReady4,
+    statusReady5,
     statusReady2,
     statusReady7,
     statusReady8,
     statusReady9,
-    statusReady10
-    
+    statusReady10,
+    statusReady11
+
     // statusReady4,
-   // statusReady5
+    // statusReady5
 }
 
 //console.log(Math.floor(100000 + Math.random() * 900000));
@@ -75,39 +80,39 @@ let data = {
 }
 
 function getPayload(context, events, next) {
-    _parseCSV5().then((jsonObj5)=>{
+    _parseCSV5().then((jsonObj5) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj5.length);
         let newData = data
-        newData.adjustment.equipment=jsonObj5[Number(currentRow)].equipmentid.toString()
-        newData.adjustment.message=jsonObj5[Number(currentRow)].message.toString()
+        newData.adjustment.equipment = jsonObj5[Number(currentRow)].equipmentid.toString()
+        newData.adjustment.message = jsonObj5[Number(currentRow)].message.toString()
         newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
         newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
         context.vars.payload = newData;
         console.log("New Transformed Data", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
-// function statusReady5(context, next) {
-//     _parseCSV5().then((jsonObj5)=>{
-//         let currentRow = context.vars.currentRow;
-//         console.log(currentRow, jsonObj5.length);
-//         let newData = data
-//         const continueLooping = currentRow < jsonObj5.length;
-//         if (continueLooping) {
-//                 newData.adjustment.equipment=jsonObj5[Number(currentRow)].equipmentid.toString()
-// 				newData.adjustment.message=jsonObj5[Number(currentRow)].message.toString()
-// 				newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
-// 				newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
-//             context.vars.payload = newData;
-//             console.log("New Transformed Data", newData)
-//         }
-//         context.vars.currentRow=currentRow+1;
-//         return next(continueLooping);
-//     })
-// }
+function statusReady5(context, next) {
+    _parseCSV5().then((jsonObj5) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj5.length);
+        let newData = data
+        const continueLooping = currentRow < jsonObj5.length;
+        if (continueLooping) {
+            newData.adjustment.equipment = jsonObj5[Number(currentRow)].equipmentid.toString()
+            newData.adjustment.message = jsonObj5[Number(currentRow)].message.toString()
+            newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
+            newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
+            context.vars.payload = newData;
+            console.log("New Transformed Data", newData)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
 
 //*ADD ADJUSTMENT TO EXISTING PAYOUT *//
 function _parseCSV4() {
@@ -136,40 +141,40 @@ let data1 = {
 
 
 function getPayload1(context, events, next) {
-    _parseCSV4().then((jsonObj4)=>{
+    _parseCSV4().then((jsonObj4) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj4.length);
-        let newData = data1 
-        newData.adjustment.equipment=jsonObj4[Number(currentRow)].equipmentid.toString()
-        newData.adjustment.message=jsonObj4[Number(currentRow)].message.toString()
+        let newData = data1
+        newData.adjustment.equipment = jsonObj4[Number(currentRow)].equipmentid.toString()
+        newData.adjustment.message = jsonObj4[Number(currentRow)].message.toString()
         newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
         newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
         context.vars.payload1 = newData;
         console.log("New Transformed Data", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
-// function statusReady4(context, next) {
-//     _parseCSV4().then((jsonObj4)=>{
-//         let currentRow = context.vars.currentRow;
-//         console.log(currentRow, jsonObj4.length);
-//         let newData = data1
-//         const continueLooping = currentRow < jsonObj4.length;
-//         console.log(currentRow,jsonObj4[Number])
-//         if (continueLooping) {
-//             newData.adjustment.equipment=jsonObj4[Number(currentRow)].equipmentid.toString()
-// 			newData.adjustment.message=jsonObj4[Number(currentRow)].message.toString()
-// 			newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
-// 			newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
-//             context.vars.payload1 = newData;
-//             console.log("New Transformed Data", newData)
-//         }
-//         context.vars.currentRow=currentRow+1;
-//         return next(continueLooping);
-//     })
-// }
+function statusReady4(context, next) {
+    _parseCSV4().then((jsonObj4) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj4.length);
+        let newData = data1
+        const continueLooping = currentRow < jsonObj4.length;
+        console.log(currentRow, jsonObj4[Number])
+        if (continueLooping) {
+            newData.adjustment.equipment = jsonObj4[Number(currentRow)].equipmentid.toString()
+            newData.adjustment.message = jsonObj4[Number(currentRow)].message.toString()
+            newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
+            newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
+            context.vars.payload1 = newData;
+            console.log("New Transformed Data", newData)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
 
 /*Create_Accessorial_request_Bobtail*/
 function _parseCSV() {
@@ -214,38 +219,38 @@ let data2 = [
     }
 ]
 function getPayload2(context, events, next) {
-    _parseCSV().then((jsonObj)=>{
+    _parseCSV().then((jsonObj) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj.length);
-        let newData = data2 
+        let newData = data2
         newData[0].shipper_rate = jsonObj[Number(currentRow)].shipper_rate1.toString()
-        newData[0].carrier_rate=jsonObj[Number(currentRow)].carrier_rate1.toString()
-        newData[0].shipment=jsonObj[Number(currentRow)].shipment.toString()
-        newData[0].carrier=jsonObj[Number(currentRow)].carrierid.toString()
-        newData[0].shipper=jsonObj[Number(currentRow)].shipperid.toString()
+        newData[0].carrier_rate = jsonObj[Number(currentRow)].carrier_rate1.toString()
+        newData[0].shipment = jsonObj[Number(currentRow)].shipment.toString()
+        newData[0].carrier = jsonObj[Number(currentRow)].carrierid.toString()
+        newData[0].shipper = jsonObj[Number(currentRow)].shipperid.toString()
         context.vars.payload2 = newData;
         console.log("New Transformed Data", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
 function statusReady(context, next) {
-    _parseCSV().then((jsonObj)=>{
+    _parseCSV().then((jsonObj) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj.length);
         let newData = data2
         const continueLooping = currentRow < jsonObj.length;
         if (continueLooping) {
             newData[0].shipper_rate = jsonObj[Number(currentRow)].shipper_rate1.toString()
-            newData[0].carrier_rate=jsonObj[Number(currentRow)].carrier_rate1.toString()
-            newData[0].shipment=jsonObj[Number(currentRow)].shipment.toString()
-            newData[0].carrier=jsonObj[Number(currentRow)].carrierid.toString()
-            newData[0].shipper=jsonObj[Number(currentRow)].shipperid.toString()
+            newData[0].carrier_rate = jsonObj[Number(currentRow)].carrier_rate1.toString()
+            newData[0].shipment = jsonObj[Number(currentRow)].shipment.toString()
+            newData[0].carrier = jsonObj[Number(currentRow)].carrierid.toString()
+            newData[0].shipper = jsonObj[Number(currentRow)].shipperid.toString()
             context.vars.payload2 = newData;
             console.log("New Transformed Data", newData)
         }
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
     })
 }
@@ -295,7 +300,7 @@ let data3 = [
 // }
 
 function getPayload3(context, events, next) {
-    _parseCSV8().then((jsonObj8)=>{
+    _parseCSV8().then((jsonObj8) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj8.length);
         let newData = data3
@@ -305,13 +310,13 @@ function getPayload3(context, events, next) {
         newData[1].job_id = jsonObj8[Number(currentRow)].job_id1.toString()
         context.vars.payload3 = newData;
         console.log("BULK_APPOINTMENT_CHANGES", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
 function statusReady8(context, next) {
-    _parseCSV8().then((jsonObj8)=>{
+    _parseCSV8().then((jsonObj8) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj8.length);
         let newData = data3
@@ -324,7 +329,7 @@ function statusReady8(context, next) {
             context.vars.payload3 = newData;
             console.log("New BULK_APPOINTMENT_CHANGES Data", newData)
         }
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
     })
 }
@@ -370,15 +375,15 @@ let data4 = [
 ]
 
 function getPayload4(context, events, next) {
-    _parseCSV6().then((jsonObj6)=>{
+    _parseCSV6().then((jsonObj6) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj6.length);
-        let newData = data4 
+        let newData = data4
         newData[0].job_id = jsonObj6[Number(currentRow)].job_id.toString()
         newData[0].stop_id = jsonObj6[Number(currentRow)].stop_id.toString()
         context.vars.payload4 = newData;
         console.log("Bulk_Stop_Complete_With_File_Upload", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
@@ -406,20 +411,20 @@ function _parseCSV7() {
 let data5 = { "driverId": "55025cdc02ca450f00000019", "_type": "Driver" }
 
 function getPayload5(context, events, next) {
-    _parseCSV7().then((jsonObj7)=>{
+    _parseCSV7().then((jsonObj7) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj7.length);
         let newData = data5
         newData.driverId = jsonObj7[Number(currentRow)].driverId.toString()
         context.vars.payload5 = newData;
         console.log("driverassigment", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
 function statusReady7(context, next) {
-    _parseCSV7().then((jsonObj7)=>{
+    _parseCSV7().then((jsonObj7) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj7.length);
         let newData = data5
@@ -429,7 +434,7 @@ function statusReady7(context, next) {
             context.vars.payload5 = newData;
             console.log("driverassigment", newData)
         }
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
     })
 }
@@ -723,22 +728,22 @@ let data7 = {
 function getPayload7(context, events, next) {
     _parseCSV1().then((jsonObj1) => {
         let currentRow = 0;
-        console.log(currentRow,jsonObj1);
+        console.log(currentRow, jsonObj1);
         const randomNbr = getRandom();
         let newData = data7
-        newData.shipment.reference_numbers[0].value=randomNbr
+        newData.shipment.reference_numbers[0].value = randomNbr
         newData.shipment.shipment_type = jsonObj1[Number(currentRow)].shipment_type.toString()
         newData.shipment.shipper = jsonObj1[Number(currentRow)].shipperid.toString()
         context.vars.payload7 = newData;
         console.log("booking shipment", newData)
-        context.vars.currentRow = currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
 function statusReady2(context, next) {
     console.log("Hit status ready")
-    _parseCSV1().then((jsonObj1)=>{
+    _parseCSV1().then((jsonObj1) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj1);
         let newData = data7
@@ -749,7 +754,7 @@ function statusReady2(context, next) {
             context.vars.payload7 = newData;
             console.log("New Transformed Data", newData)
         }
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
     })
 }
@@ -765,14 +770,14 @@ function _parseCSV2() {
     })
 }
 
-let data8 = {"userId":""}
+let data8 = { "userId": "" }
 function getPayload8(context, events, next) {
     _parseCSV2().then((jsonObj2) => {
-    console.log("Offer Distribution",jsonObj2);
-    let newData = data8
-    newData.userId = jsonObj2[0].driver.toString()
-    context.vars.payload8 = newData;
-    return next();
+        console.log("Offer Distribution", jsonObj2);
+        let newData = data8
+        newData.userId = jsonObj2[0].driver.toString()
+        context.vars.payload8 = newData;
+        return next();
     })
 }
 
@@ -790,9 +795,9 @@ function _parseCSV3() {
 
 let data9 = {
     "shipmentIds": [
-        "625eac94d83aec140f8e9629",
-        "625eaca0d83aec140f8e9e4f",
-        "625eacaed83aec140f8ea616"
+        "626b6e2f83c4121b6a2df2aa",
+        "626b6e2f83c4121b6a2df337",
+        "626b6e3083c4121b6a2df47a"
     ],
     "driver": {
         "_id": "55025cdc02ca450f00000019",
@@ -818,35 +823,35 @@ let data9 = {
 }
 
 function getPayload9(context, events, next) {
-    _parseCSV3().then((jsonObj3)=>{
+    _parseCSV3().then((jsonObj3) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj3.length);
         let newData = data9
-        newData.shipmentIds[0]=jsonObj3[Number(currentRow)].shipmentid1.toString();
-        newData.shipmentIds[1]=jsonObj3[Number(currentRow)].shipmentid2.toString();
-        newData.shipmentIds[2]=jsonObj3[Number(currentRow)].shipmentid3.toString();
+        newData.shipmentIds[0] = jsonObj3[Number(currentRow)].shipmentid1.toString();
+        newData.shipmentIds[1] = jsonObj3[Number(currentRow)].shipmentid2.toString();
+        newData.shipmentIds[2] = jsonObj3[Number(currentRow)].shipmentid3.toString();
         context.vars.payload9 = newData;
         console.log("Bulk Driver assigment1", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
 function statusReady3(context, next) {
     console.log("bulk driver")
-    _parseCSV3().then((jsonObj3)=>{
+    _parseCSV3().then((jsonObj3) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj3.length);
         let newData = data9
         const continueLooping = currentRow < jsonObj3.length;
         if (continueLooping) {
-            newData.shipmentIds[0]=jsonObj3[Number(currentRow)].shipmentid1.toString();
-            newData.shipmentIds[1]=jsonObj3[Number(currentRow)].shipmentid2.toString();
-            newData.shipmentIds[2]=jsonObj3[Number(currentRow)].shipmentid3.toString();
+            newData.shipmentIds[0] = jsonObj3[Number(currentRow)].shipmentid1.toString();
+            newData.shipmentIds[1] = jsonObj3[Number(currentRow)].shipmentid2.toString();
+            newData.shipmentIds[2] = jsonObj3[Number(currentRow)].shipmentid3.toString();
             context.vars.payload9 = newData;
             console.log("BULK DRIVER ASSIGNMENT", newData)
         }
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
     })
 }
@@ -878,9 +883,9 @@ let data10 = [
         "accessorial_type": "bobtail",
         "type": "accessorial",
         "exception_type": "Accessorial Request",
-		"shipment":"626941f17071f6bd20bc96c1",
-		"carrier":"518d9941d80f1f0200000002",
-		"shipper":"5918ead7d179d4090000001f",
+        "shipment": "626941f17071f6bd20bc96c1",
+        "carrier": "518d9941d80f1f0200000002",
+        "shipper": "5918ead7d179d4090000001f",
         "shipper_name": "Ceva Ontaro - Yard Moves",
         "carrier_name": "DGCarrier",
         "payee_type": "carrier",
@@ -890,85 +895,85 @@ let data10 = [
         "shipper_status": "pending-shipper",
         "carrier_status": "pending-shipper"
     },
-	{
-      "shipper_rate":"20.00",
-      "carrier_rate":"13.00",
-      "carrier_unit_qty":1,
-      "shipper_unit_qty":1,
-      "description":null,
-      "begin_datetime":null,
-      "end_datetime":null,
-      "location":"",
-      "note":"",
-      "equipment":[
-         "61c102b3b1190f0db07dcdca"
-      ],
-      "message":"Cleaning",
-      "accessorial_type":"cleaning",
-      "type":"accessorial",
-      "exception_type":"Accessorial Request",
-      "shipment":"626941f17071f6bd20bc96c1",
-      "carrier":"518d9941d80f1f0200000002",
-      "shipper":"5918ead7d179d4090000001f",
-      "shipper_name":"Ceva Ontaro - Yard Moves",
-      "carrier_name":"DGCarrier",
-      "payee_type":"carrier",
-      "vendor_name":"",
-      "vendor":null,
-      "shipment_id":"CEV-19462",
-      "shipper_status":"pending-shipper",
-      "carrier_status":"pending-shipper"
-   }
+    {
+        "shipper_rate": "20.00",
+        "carrier_rate": "13.00",
+        "carrier_unit_qty": 1,
+        "shipper_unit_qty": 1,
+        "description": null,
+        "begin_datetime": null,
+        "end_datetime": null,
+        "location": "",
+        "note": "",
+        "equipment": [
+            "61c102b3b1190f0db07dcdca"
+        ],
+        "message": "Cleaning",
+        "accessorial_type": "cleaning",
+        "type": "accessorial",
+        "exception_type": "Accessorial Request",
+        "shipment": "626941f17071f6bd20bc96c1",
+        "carrier": "518d9941d80f1f0200000002",
+        "shipper": "5918ead7d179d4090000001f",
+        "shipper_name": "Ceva Ontaro - Yard Moves",
+        "carrier_name": "DGCarrier",
+        "payee_type": "carrier",
+        "vendor_name": "",
+        "vendor": null,
+        "shipment_id": "CEV-19462",
+        "shipper_status": "pending-shipper",
+        "carrier_status": "pending-shipper"
+    }
 ]
 
 function getPayload10(context, events, next) {
-    _parseCSV9().then((jsonObj9)=>{
+    _parseCSV9().then((jsonObj9) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj9.length);
         let newData = data10
         newData[0].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate.toString()
-        newData[0].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate.toString()
-        newData[0].shipment=jsonObj9[Number(currentRow)].shipment.toString()
-        newData[0].carrier=jsonObj9[Number(currentRow)].carrierid.toString()
-        newData[0].shipper=jsonObj9[Number(currentRow)].shipperid.toString()
-        newData[0].shipment_id=jsonObj9[Number(currentRow)].shipmentid.toString()
+        newData[0].carrier_rate = jsonObj9[Number(currentRow)].carrier_rate.toString()
+        newData[0].shipment = jsonObj9[Number(currentRow)].shipment.toString()
+        newData[0].carrier = jsonObj9[Number(currentRow)].carrierid.toString()
+        newData[0].shipper = jsonObj9[Number(currentRow)].shipperid.toString()
+        newData[0].shipment_id = jsonObj9[Number(currentRow)].shipmentid.toString()
         newData[1].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate1.toString()
-        newData[1].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate1.toString()
-        newData[1].shipment=jsonObj9[Number(currentRow)].shipment1.toString()
-        newData[1].carrier=jsonObj9[Number(currentRow)].carrierid1.toString()
-        newData[1].shipper=jsonObj9[Number(currentRow)].shipperid1.toString()
-        newData[1].shipment_id=jsonObj9[Number(currentRow)].shipmentid1.toString()
+        newData[1].carrier_rate = jsonObj9[Number(currentRow)].carrier_rate1.toString()
+        newData[1].shipment = jsonObj9[Number(currentRow)].shipment1.toString()
+        newData[1].carrier = jsonObj9[Number(currentRow)].carrierid1.toString()
+        newData[1].shipper = jsonObj9[Number(currentRow)].shipperid1.toString()
+        newData[1].shipment_id = jsonObj9[Number(currentRow)].shipmentid1.toString()
         context.vars.payload10 = newData;
         console.log("bulk_accessorials", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
 function statusReady9(context, next) {
     console.log("bulk driver")
-    _parseCSV9().then((jsonObj9)=>{
+    _parseCSV9().then((jsonObj9) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj9);
         let newData = data10
         const continueLooping = currentRow < jsonObj9.length;
         if (continueLooping) {
             newData[0].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate.toString()
-            newData[0].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate.toString()
-            newData[0].shipment=jsonObj9[Number(currentRow)].shipment.toString()
-            newData[0].carrier=jsonObj9[Number(currentRow)].carrierid.toString()
-            newData[0].shipper=jsonObj9[Number(currentRow)].shipperid.toString()
-            newData[0].shipment_id=jsonObj9[Number(currentRow)].shipmentid.toString()
+            newData[0].carrier_rate = jsonObj9[Number(currentRow)].carrier_rate.toString()
+            newData[0].shipment = jsonObj9[Number(currentRow)].shipment.toString()
+            newData[0].carrier = jsonObj9[Number(currentRow)].carrierid.toString()
+            newData[0].shipper = jsonObj9[Number(currentRow)].shipperid.toString()
+            newData[0].shipment_id = jsonObj9[Number(currentRow)].shipmentid.toString()
             newData[1].shipper_rate = jsonObj9[Number(currentRow)].shipper_rate1.toString()
-            newData[1].carrier_rate=jsonObj9[Number(currentRow)].carrier_rate1.toString()
-            newData[1].shipment=jsonObj9[Number(currentRow)].shipment1.toString()
-            newData[1].carrier=jsonObj9[Number(currentRow)].carrierid1.toString()
-            newData[1].shipper=jsonObj9[Number(currentRow)].shipperid1.toString()
-            newData[1].shipment_id=jsonObj9[Number(currentRow)].shipmentid1.toString()
+            newData[1].carrier_rate = jsonObj9[Number(currentRow)].carrier_rate1.toString()
+            newData[1].shipment = jsonObj9[Number(currentRow)].shipment1.toString()
+            newData[1].carrier = jsonObj9[Number(currentRow)].carrierid1.toString()
+            newData[1].shipper = jsonObj9[Number(currentRow)].shipperid1.toString()
+            newData[1].shipment_id = jsonObj9[Number(currentRow)].shipmentid1.toString()
             context.vars.payload10 = newData;
             console.log("bulk_accessorials", newData)
         }
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
     })
 }
@@ -1125,92 +1130,138 @@ let data11 = {
 }
 
 function getPayload11(context, events, next) {
-    _parseCSV11().then((jsonObj11)=>{
+    _parseCSV11().then((jsonObj11) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj11.length);
         let newData = data11
         newData.accessorials[0]._id = jsonObj11[Number(currentRow)]._id.toString()
-        newData.accessorials[0].equipment_id[0]= jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials[0].equipment[0]= jsonObj11[Number(currentRow)].equipment.toString()
-        newData.accessorials[0].shipper_rate[0]= jsonObj11[Number(currentRow)].shipper_rate.toString()
-        newData.accessorials[0].carrier_rate= jsonObj11[Number(currentRow)].carrier_rate.toString()
+        newData.accessorials[0].equipment_id[0] = jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].equipment[0] = jsonObj11[Number(currentRow)].equipment.toString()
+        newData.accessorials[0].shipper_rate[0] = jsonObj11[Number(currentRow)].shipper_rate.toString()
+        newData.accessorials[0].carrier_rate = jsonObj11[Number(currentRow)].carrier_rate.toString()
         newData.accessorials[0].message = jsonObj11[Number(currentRow)].message.toString()
         newData.accessorials[0].accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
-        newData.accessorials[0].shipment.equipments[0]= jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials[0].shipment.equipments[1]= jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].value[0]=jsonObj11[Number(currentRow)].Master_Ref.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].optimized[0]=jsonObj11[Number(currentRow)].Master_Ref.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].value[1]==jsonObj11[Number(currentRow)].order_nbr.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].optimized[1]==jsonObj11[Number(currentRow)].order_nbr.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].value[2]==jsonObj11[Number(currentRow)].order_nbr.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].optimized[2]==jsonObj11[Number(currentRow)].order_nbr.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].value[4]==jsonObj11[Number(currentRow)].shipmentid.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].optimized[4]==jsonObj11[Number(currentRow)].shipmentid.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].value[5]==jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].optimized[5]==jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].value[6]==jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials[0].shipment.reference_numbers[0].optimized[6]==jsonObj11[Number(currentRow)].equipment_id.toString()
-        newData.accessorials[0].shipment.carrier[0]==jsonObj11[Number(currentRow)].carrierid.toString()
-        newData.accessorials[0].shipment.shipper[0]==jsonObj11[Number(currentRow)].shipperid.toString()
-        newData.accessorials[0].carrier[0]==jsonObj11[Number(currentRow)].carrierid.toString()
-        newData.accessorials[0].shipper[0]==jsonObj11[Number(currentRow)].shipperid.toString()
-        newData.accessorials[0].shipment_id[0]==jsonObj11[Number(currentRow)].shipmentid.toString()
-        newData.accessorials[0].shipper_rate[0]==jsonObj11[Number(currentRow)].shipper_rate.toString()
-        newData.accessorials[0].carrier_rate[0]==jsonObj11[Number(currentRow)].carrier_rate.toString()
+        newData.accessorials[0].shipment.equipments[0] = jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].shipment.equipments[1] = jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].value[0] = jsonObj11[Number(currentRow)].Master_Ref.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].optimized[0] = jsonObj11[Number(currentRow)].Master_Ref.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].value[1] = jsonObj11[Number(currentRow)].order_nbr.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].optimized[1] = jsonObj11[Number(currentRow)].order_nbr.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].value[2] = jsonObj11[Number(currentRow)].order_nbr.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].optimized[2] = jsonObj11[Number(currentRow)].order_nbr.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].value[4] = jsonObj11[Number(currentRow)].shipmentid.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].optimized[4] = jsonObj11[Number(currentRow)].shipmentid.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].value[5] = jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].optimized[5] = jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].value[6] = jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].shipment.reference_numbers[0].optimized[6] = jsonObj11[Number(currentRow)].equipment_id.toString()
+        newData.accessorials[0].shipment.carrier[0] = jsonObj11[Number(currentRow)].carrierid.toString()
+        newData.accessorials[0].shipment.shipper[0] = jsonObj11[Number(currentRow)].shipperid.toString()
+        newData.accessorials[0].carrier[0] = jsonObj11[Number(currentRow)].carrierid.toString()
+        newData.accessorials[0].shipper[0] = jsonObj11[Number(currentRow)].shipperid.toString()
+        newData.accessorials[0].shipment_id[0] = jsonObj11[Number(currentRow)].shipmentid.toString()
+        newData.accessorials[0].shipper_rate[0] = Number(jsonObj11[Number(currentRow)].shipper_rate)
+        newData.accessorials[0].carrier_rate[0] = Number(jsonObj11[Number(currentRow)].carrier_rate)
         context.vars.payload11 = newData;
         console.log("Accessorial resolve-status accept/decline", newData)
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
         return next();
     })
 }
 
 function statusReady10(context, next) {
     console.log("bulk driver")
-    _parseCSV11().then((jsonObj11)=>{
+    _parseCSV11().then((jsonObj11) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj11);
         let newData = data11
         const continueLooping = currentRow < jsonObj11.length;
         if (continueLooping) {
             newData.accessorials[0]._id = jsonObj11[Number(currentRow)]._id.toString()
-            newData.accessorials[0].equipment_id[0]= jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials[0].equipment[0]= jsonObj11[Number(currentRow)].equipment.toString()
-            newData.accessorials[0].shipper_rate[0]= jsonObj11[Number(currentRow)].shipper_rate.toString()
-            newData.accessorials[0].carrier_rate= jsonObj11[Number(currentRow)].carrier_rate.toString()
+            newData.accessorials[0].equipment_id[0] = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].equipment[0] = jsonObj11[Number(currentRow)].equipment.toString()
+            newData.accessorials[0].shipper_rate[0] = Number(jsonObj11[Number(currentRow)].shipper_rate)
+            newData.accessorials[0].carrier_rate = Number(jsonObj11[Number(currentRow)].carrier_rate)
             newData.accessorials[0].message = jsonObj11[Number(currentRow)].message.toString()
             newData.accessorials[0].accessorial_type = jsonObj11[Number(currentRow)].accessorial_type.toString()
-            newData.accessorials[0].shipment.equipments[0]= jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials[0].shipment.equipments[1]= jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].value[0]=jsonObj11[Number(currentRow)].Master_Ref.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].optimized[0]=jsonObj11[Number(currentRow)].Master_Ref.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].value[1]==jsonObj11[Number(currentRow)].order_nbr.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].optimized[1]==jsonObj11[Number(currentRow)].order_nbr.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].value[2]==jsonObj11[Number(currentRow)].order_nbr.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].optimized[2]==jsonObj11[Number(currentRow)].order_nbr.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].value[4]==jsonObj11[Number(currentRow)].shipmentid.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].optimized[4]==jsonObj11[Number(currentRow)].shipmentid.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].value[5]==jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].optimized[5]==jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].value[6]==jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials[0].shipment.reference_numbers[0].optimized[6]==jsonObj11[Number(currentRow)].equipment_id.toString()
-            newData.accessorials[0].shipment.carrier[0]==jsonObj11[Number(currentRow)].carrierid.toString()
-            newData.accessorials[0].shipment.shipper[0]==jsonObj11[Number(currentRow)].shipperid.toString()
-            newData.accessorials[0].carrier[0]==jsonObj11[Number(currentRow)].carrierid.toString()
-            newData.accessorials[0].shipper[0]==jsonObj11[Number(currentRow)].shipperid.toString()
-            newData.accessorials[0].shipment_id[0]==jsonObj11[Number(currentRow)].shipmentid.toString()
-            newData.accessorials[0].shipper_rate[0]==jsonObj11[Number(currentRow)].shipper_rate.toString()
-            newData.accessorials[0].carrier_rate[0]==jsonObj11[Number(currentRow)].carrier_rate.toString()
+            newData.accessorials[0].shipment.equipments[0] = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].shipment.equipments[1] = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].value[0] = jsonObj11[Number(currentRow)].Master_Ref.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].optimized[0] = jsonObj11[Number(currentRow)].Master_Ref.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].value[1] = jsonObj11[Number(currentRow)].order_nbr.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].optimized[1] = jsonObj11[Number(currentRow)].order_nbr.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].value[2] = jsonObj11[Number(currentRow)].order_nbr.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].optimized[2] = jsonObj11[Number(currentRow)].order_nbr.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].value[4] = jsonObj11[Number(currentRow)].shipmentid.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].optimized[4] = jsonObj11[Number(currentRow)].shipmentid.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].value[5] = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].optimized[5] = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].value[6] = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].shipment.reference_numbers[0].optimized[6] = jsonObj11[Number(currentRow)].equipment_id.toString()
+            newData.accessorials[0].shipment.carrier[0] = jsonObj11[Number(currentRow)].carrierid.toString()
+            newData.accessorials[0].shipment.shipper[0] = jsonObj11[Number(currentRow)].shipperid.toString()
+            newData.accessorials[0].carrier[0] = jsonObj11[Number(currentRow)].carrierid.toString()
+            newData.accessorials[0].shipper[0] = jsonObj11[Number(currentRow)].shipperid.toString()
+            newData.accessorials[0].shipment_id[0] = jsonObj11[Number(currentRow)].shipmentid.toString()
+            newData.accessorials[0].shipper_rate[0] = Number(jsonObj11[Number(currentRow)].shipper_rate)
+            newData.accessorials[0].carrier_rate[0] = Number(jsonObj11[Number(currentRow)].carrier_rate)
             context.vars.payload11 = newData;
             console.log("Accessorial resolve-status accept/decline", newData)
         }
-        context.vars.currentRow=currentRow+1;
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
+
+/*Get Invoice by shipper*/
+
+function _parseCSV12() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath12)
+            .then((jsonObj12) => {
+                resolve(jsonObj12)
+            })
+    })
+}
+
+function formatUrl(shipper) {
+    return `/api/v2/shippers/${shipper}/invoices?populate%5B0%5D%5Bpath%5D=shipper&populate%5B0%5D%5Bselect%5D=company_name%20email&page=1&page_size=20&sort_by=date_created`;
+}
+
+function getPayload12(context, events, next) {
+    _parseCSV12().then((jsonObj12) => {
+        let currentRow = 0;
+        console.log(currentRow, jsonObj12.length);
+        let newData = data12
+        newData.adjustment.equipment = jsonObj12[Number(currentRow)].equipmentid.toString()
+        context.vars.payload12 = newData;
+        console.log("Get Invoice By Shipper", newData)
+        context.vars.currentRow = currentRow + 1;
+        return next();
+    })
+}
+
+function statusReady11(context, next) {
+    _parseCSV12().then((jsonObj12) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj12.length);
+        let newData = data
+        const continueLooping = currentRow < jsonObj12.length;
+        if (continueLooping) {
+            newData.adjustment.equipment = jsonObj12[Number(currentRow)].equipmentid.toString()
+            context.vars.payload = newData;
+            console.log("Get Invoice By Shipper", newData)
+        }
+        context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
     })
 }
 
 
+
 function logResponse(requestParams, response, context, ee, next) {
-    const parsedResponse = JSON.parse(response.body);
+    const parsedResponse = response.body
     console.log(parsedResponse);
     return next(); // MUST be called for the scenario to continue
 }

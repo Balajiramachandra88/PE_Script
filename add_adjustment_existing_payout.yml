@@ -49,7 +49,7 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
             json: "{{ payload1 }}" 
-      #  whileTrue: "statusReady4"
+          whileTrue: "statusReady4"
               
     
               

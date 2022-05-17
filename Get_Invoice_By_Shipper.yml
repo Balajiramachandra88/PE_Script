@@ -34,8 +34,11 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get Invoices By Shipper"
-      - get:
+      - function: getPayload3
+      - loop:
+        - think: 1  
+        - log: "Get Invoices By Shipper"
+        - get:
           afterResponse: "logResponse"
           url: "/api/v2/shippers/{{ shipper }}/invoices?populate%5B0%5D%5Bpath%5D=shipper&populate%5B0%5D%5Bselect%5D=company_name%20email&page=1&page_size=20&sort_by=date_created"
           headers:
