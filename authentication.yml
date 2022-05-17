@@ -9,8 +9,8 @@ config:
         - "username"
         - "password"
   phases:
-    - duration: 20
-      arrivalCount: 3
+    - duration: 1
+      arrivalCount: 1
 scenarios:
   - flow:
       - log: "Get auth token"
