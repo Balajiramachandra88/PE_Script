@@ -34,14 +34,18 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get offer by carrier"
-      - get:
-          afterResponse: "logResponse1"
-          url: "/api/v2/marketplace/offers?carrier={{ carrierid }}&shipment_type%5B0%5D=drayage&shipment_type%5B1%5D=shorthaul&order.service_type%5B0%5D=drop&order.service_type%5B1%5D=live&_=1644229565232&page=1&per_page=10&sort=offerId&sort_dir=asc"
-          headers:
-            authorization: "X-Cargomatic {{ token }}"
-            authority: "admin-api-acceptance.cargomatic.com"
-            content-type: "application/json"
-            sec-fetch-site: "same-site"
-            sec-fetch-mode: "cors"
-            sec-fetch-dest: "empty"
+      - function: getPayload13
+      - loop:
+        - think: 1  
+        - log: "get_offers_by_carrier"
+        - get:
+            afterResponse: "logResponse"
+            url: "{{ urlEndPoint1 }}"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+        whileTrue: "statusReady12"

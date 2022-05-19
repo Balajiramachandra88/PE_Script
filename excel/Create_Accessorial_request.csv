@@ -1,4 +1,11 @@
-shipment,carrierid,shipperid,shipper_name,carrier_name,shipment_id,shipper_rate1,carrier_rate1,carrier_unit_qty,shipper_unit_qty,description,begin_datetime,end_datetime
-62624c3e85b437e4a06c726d,518d9941d80f1f0200000002,5918ead7d179d4090000001f,Ceva Ontaro - Yard Moves,DGCarrier,CEV-19295,32.5,20.5,1,1,null,null,null
-62624c3e85b437e4a06c726d,518d9941d80f1f0200000002,5918ead7d179d4090000001f,Ceva Ontaro - Yard Moves,DGCarrier,CEV-19295,31,21.5,1,1,null,null,null
-62624c3e85b437e4a06c726d,518d9941d80f1f0200000002,5918ead7d179d4090000001f,Ceva Ontaro - Yard Moves,DGCarrier,CEV-19295,33.5,23.5,1,1,null,null,null
+shipment,carrierid,shipperid,shipper_name,carrier_name,shipment_id,message,accessorial_type,shipper_rate1,carrier_rate1,carrier_unit_qty,shipper_unit_qty,description,begin_datetime,end_datetime
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,32.5,20.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,33.5,21.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,34.5,22.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,35.5,23.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,36.5,24.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,37.5,25.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,39.5,26.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,40.5,27.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,41.5,28.5,1,1,null,null,null
+628625c14eb23b29e39c9938,518d9941d80f1f0200000002,621fca0994a40a544fa159af,Allison Kramer,DGCarrier,ALL-1014,Bobtail,bobtail,42.5,29.5,1,1,null,null,null

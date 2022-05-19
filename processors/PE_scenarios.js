@@ -13,7 +13,11 @@ const csvFilePath8 = path.dirname(__dirname) + '/excel/bulk_appointment_changes.
 const csvFilePath9 = path.dirname(__dirname) + '/excel/bulk_accessorials.csv';
 const csvFilePath11 = path.dirname(__dirname) + '/excel/approve_accessorial.csv';
 const csvFilePath12 = path.dirname(__dirname) + '/excel/Get_Invoice_By_Shipper.csv';
-
+const csvFilePath13 = path.dirname(__dirname) + '/excel/get_offers_by_carrier.csv';
+const csvFilePath14 = path.dirname(__dirname) + '/excel/get_payouts_by_carrier.csv';
+const csvFilePath15 = path.dirname(__dirname) + '/excel/get_shipment_by_customer.csv';
+const csvFilePath16 = path.dirname(__dirname) + '/excel/get_shipment_by_ID.csv';
+const csvFilePath17 = path.dirname(__dirname) + '/excel/get_shipment_by_refNbr.csv';
 module.exports = {
     getPayload,
     _parseCSV,
@@ -32,6 +36,11 @@ module.exports = {
     getPayload10,
     getPayload11,
     getPayload12,
+    getPayload13,
+    getPayload14,
+    getPayload15,
+    getPayload16,
+    getPayload17,
     statusReady,
     statusReady3,
     statusReady4,
@@ -41,7 +50,14 @@ module.exports = {
     statusReady8,
     statusReady9,
     statusReady10,
-    statusReady11
+    statusReady11,
+    statusReady12,
+    statusReady13,
+    statusReady14,
+    statusReady15,
+    statusReady16,
+    statusReady17,
+    statusReady18
 
     // statusReady4,
     // statusReady5
@@ -78,6 +94,8 @@ let data = {
     },
     "ledger": "receivables"
 }
+
+
 
 function getPayload(context, events, next) {
     _parseCSV5().then((jsonObj5) => {
@@ -387,6 +405,23 @@ function getPayload4(context, events, next) {
         return next();
     })
 }
+function statusReady18(context, next) {
+    _parseCSV6().then((jsonObj6) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj6.length);
+        let newData = data4
+        const continueLooping = currentRow < jsonObj6.length;
+        if (continueLooping) {
+            newData[0].job_id = jsonObj6[Number(currentRow)].job_id.toString()
+            newData[0].stop_id = jsonObj6[Number(currentRow)].stop_id.toString()
+            context.vars.payload4 = newData;
+            console.log("Bulk_Stop_Complete_With_File_Upload", newData)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
+
 // function getPayload4(context, events, next) {
 //     console.log("Bulk_Stop_Complete_With_File_Upload");
 //     const randomNbr = getRandom();
@@ -407,6 +442,9 @@ function _parseCSV7() {
             })
     })
 }
+function formatUrl6(shipmentid) {
+    return `/api/v2/jobs/${ shipmentid }/driver`;
+}
 
 let data5 = { "driverId": "55025cdc02ca450f00000019", "_type": "Driver" }
 
@@ -415,8 +453,11 @@ function getPayload5(context, events, next) {
         let currentRow = 0;
         console.log(currentRow, jsonObj7.length);
         let newData = data5
+        let newURL = formatUrl6(jsonObj7[Number(currentRow)].shipmentid.toString())
         newData.driverId = jsonObj7[Number(currentRow)].driverId.toString()
         context.vars.payload5 = newData;
+        context.vars.urlEndPoint6 = newURL;
+        console.log("New URL", context.vars.urlEndPoint6)
         console.log("driverassigment", newData)
         context.vars.currentRow = currentRow + 1;
         return next();
@@ -431,7 +472,10 @@ function statusReady7(context, next) {
         const continueLooping = currentRow < jsonObj7.length;
         if (continueLooping) {
             newData.driverId = jsonObj7[Number(currentRow)].driverId.toString()
+            let newURL = formatUrl6(jsonObj7[Number(currentRow)].shipmentid.toString())
+            context.vars.urlEndPoint6 = newURL;
             context.vars.payload5 = newData;
+            console.log("New URL", context.vars.urlEndPoint6)
             console.log("driverassigment", newData)
         }
         context.vars.currentRow = currentRow + 1;
@@ -770,14 +814,53 @@ function _parseCSV2() {
     })
 }
 
+function formatUrl7(shipmentid) {
+    return `/admin/marketplace/${shipmentid}/give?resend=false`;
+}
+
 let data8 = { "userId": "" }
+// function getPayload8(context, events, next) {
+//     _parseCSV2().then((jsonObj2) => {
+//         console.log("Offer Distribution", jsonObj2);
+//         let newData = data8
+//         newData.userId = jsonObj2[0].driver.toString()
+//         context.vars.payload8 = newData;
+//         return next();
+//     })
+//}
+
 function getPayload8(context, events, next) {
     _parseCSV2().then((jsonObj2) => {
-        console.log("Offer Distribution", jsonObj2);
+        let currentRow = 0;
+        console.log(currentRow, jsonObj2.length);
         let newData = data8
-        newData.userId = jsonObj2[0].driver.toString()
+        let newURL = formatUrl7(jsonObj2[Number(currentRow)].shipmentid.toString())
+         newData.userId = jsonObj2[0].driver.toString()
         context.vars.payload8 = newData;
+        context.vars.urlEndPoint7 = newURL;
+        console.log("New URL", context.vars.urlEndPoint7)
+        console.log("Offer Distribution", newData)
+        context.vars.currentRow = currentRow + 1;
         return next();
+    })
+}
+
+function statusReady17(context, next) {
+    _parseCSV2().then((jsonObj2) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj2.length);
+        let newData = data8
+        const continueLooping = currentRow < jsonObj2.length;
+        if (continueLooping) {
+			let newURL = formatUrl7(jsonObj2[Number(currentRow)].shipmentid.toString())
+			newData.userId = jsonObj2[0].driver.toString()
+            context.vars.urlEndPoint7 = newURL;
+            context.vars.payload8 = newData;
+            console.log("New URL", context.vars.urlEndPoint7)
+            console.log("Offer Distribution", newData)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
     })
 }
 
@@ -1257,6 +1340,221 @@ function statusReady11(context, next) {
 }
 
 
+/*get_offers_by_carrier*/
+
+function _parseCSV13() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath13)
+            .then((jsonObj13) => {
+                resolve(jsonObj13)
+            })
+    })
+}
+
+function formatUrl1(carrierid) {
+    return `/api/v2/marketplace/offers?carrier=${ carrierid }&shipment_type%5B0%5D=drayage&shipment_type%5B1%5D=shorthaul&order.service_type%5B0%5D=drop&order.service_type%5B1%5D=live&_=1644229565232&page=1&per_page=10&sort=offerId&sort_dir=asc`;
+}
+
+function getPayload13(context, events, next) {
+    _parseCSV13().then((jsonObj13) => {
+        let currentRow = 0;
+        console.log(currentRow, jsonObj13.length);
+        let newURL = formatUrl1(jsonObj13[Number(currentRow)].carrierid.toString())
+        context.vars.urlEndPoint1 = newURL;
+        console.log("New URL", context.vars.urlEndPoint)
+        context.vars.currentRow = currentRow + 1;
+        return next();
+    })
+}
+
+function statusReady12(context, next) {
+    _parseCSV13().then((jsonObj13) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj13.length);
+        const continueLooping = currentRow < jsonObj13.length;
+        if (continueLooping) {
+            let newURL = formatUrl1(jsonObj13[Number(currentRow)].carrierid.toString())
+            context.vars.urlEndPoint1 = newURL;
+            console.log("New URL", context.vars.urlEndPoint)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
+
+
+
+/*get_payouts_by_carrier*/
+
+function _parseCSV14() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath14)
+            .then((jsonObj14) => {
+                resolve(jsonObj14)
+            })
+    })
+}
+
+function formatUrl2(carrierid1) {
+    return `/api/v2/carriers/${ carrierid1 }/payouts?page=1&page_size=20&sort_by=date_created&sort%5Bkey%5D=due_date&sort%5Border%5D=desc&sort%5Bkey%5D=due_date&sort%5Border%5D=desc`;
+}
+
+function getPayload14(context, events, next) {
+    _parseCSV14().then((jsonObj14) => {
+        let currentRow = 0;
+        console.log(currentRow, jsonObj14.length);
+        let newURL = formatUrl2(jsonObj14[Number(currentRow)].carrierid1.toString())
+        context.vars.urlEndPoint2 = newURL;
+        console.log("New URL", context.vars.urlEndPoint2)
+        context.vars.currentRow = currentRow + 1;
+        return next();
+    })
+}
+
+function statusReady13(context, next) {
+    _parseCSV14().then((jsonObj14) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj14.length);
+        const continueLooping = currentRow < jsonObj14.length;
+        if (continueLooping) {
+            let newURL = formatUrl2(jsonObj14[Number(currentRow)].carrierid1.toString())
+            context.vars.urlEndPoint2 = newURL;
+            console.log("New URL", context.vars.urlEndPoint2)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
+/*get_shipment by customer */
+
+function _parseCSV15() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath15)
+            .then((jsonObj15) => {
+                resolve(jsonObj15)
+            })
+    })
+}
+
+function formatUrl3(customer) {
+    return `/admin/api/v2/users?page=1&per_page=25&paginate=true&sort_by=optimized_name&test=false&select=optimized_name%20company_name%20_type%20picture%20require_tracking_id%20email&lean=false&order=asc&_type=Shipper&name=${customer}`;
+}
+
+function getPayload15(context, events, next) {
+    _parseCSV15().then((jsonObj15) => {
+        let currentRow = 0;
+        console.log(currentRow, jsonObj15.length);
+        let newURL = formatUrl3(jsonObj15[Number(currentRow)].customer.toString())
+        context.vars.urlEndPoint3 = newURL;
+        console.log("New URL", context.vars.urlEndPoint3)
+        context.vars.currentRow = currentRow + 1;
+        return next();
+    })
+}
+
+function statusReady14(context, next) {
+    _parseCSV15().then((jsonObj15) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj15.length);
+        const continueLooping = currentRow < jsonObj15.length;
+        if (continueLooping) {
+            let newURL = formatUrl3(jsonObj15[Number(currentRow)].customer.toString())
+            context.vars.urlEndPoint3 = newURL;
+            console.log("New URL", context.vars.urlEndPoint3)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
+
+/*get_shipment by id */
+
+function _parseCSV16() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath16)
+            .then((jsonObj16) => {
+                resolve(jsonObj16)
+            })
+    })
+}
+
+function formatUrl4(shipmentid) {
+    return `/api/v3/jobs/${ shipmentid }`;
+}
+
+function getPayload16(context, events, next) {
+    _parseCSV16().then((jsonObj16) => {
+        let currentRow = 0;
+        console.log(currentRow, jsonObj16.length);
+        let newURL = formatUrl4(jsonObj16[Number(currentRow)].shipmentid.toString())
+        context.vars.urlEndPoint4 = newURL;
+        console.log("New URL", context.vars.urlEndPoint4)
+        context.vars.currentRow = currentRow + 1;
+        return next();
+    })
+}
+
+function statusReady15(context, next) {
+    _parseCSV16().then((jsonObj16) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj16.length);
+        const continueLooping = currentRow < jsonObj16.length;
+        if (continueLooping) {
+            let newURL = formatUrl4(jsonObj16[Number(currentRow)].shipmentid.toString())
+            context.vars.urlEndPoint4 = newURL;
+            console.log("New URL", context.vars.urlEndPoint4)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
+
+/*get_shipment by refnumber */
+
+function _parseCSV17() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath17)
+            .then((jsonObj17) => {
+                resolve(jsonObj17)
+            })
+    })
+}
+
+function formatUrl5(refNumber) {
+    return `/api/v3/jobs?reference%5B0%5D=${ refNumber }-&deliver_after%5B0%5D=2022-02-01T08%3A00%3A00.000Z&deliver_by%5B0%5D=2022-02-17T07%3A59%3A59.999Z&page=1&per_page=25&_=1645002950612`;
+}
+
+function getPayload17(context, events, next) {
+    _parseCSV17().then((jsonObj17) => {
+        let currentRow = 0;
+        console.log(currentRow, jsonObj17.length);
+        let newURL = formatUrl5(jsonObj17[Number(currentRow)].refNumber.toString())
+        context.vars.urlEndPoint5 = newURL;
+        console.log("New URL", context.vars.urlEndPoint5)
+        context.vars.currentRow = currentRow + 1;
+        return next();
+    })
+}
+
+function statusReady16(context, next) {
+    _parseCSV17().then((jsonObj17) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj17.length);
+        const continueLooping = currentRow < jsonObj17.length;
+        if (continueLooping) {
+            let newURL = formatUrl5(jsonObj17[Number(currentRow)].refNumber.toString())
+            context.vars.urlEndPoint5 = newURL;
+            console.log("New URL", context.vars.urlEndPoint5)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
 
 function logResponse(requestParams, response, context, ee, next) {
     const parsedResponse = response.body

@@ -2,15 +2,20 @@ config:
   target: "https://admin-api-acceptance.cargomatic.com"
   processor: "./processors/PE_scenarios.js"
   payload:
-      path: "users.csv"
+    - path: "users.csv"
       order: sequence
       skipHeader: true
       fields:
         - "username"
         - "password"
+    - path: "get_shipment_by_customer.csv"
+      order: sequence
+      skipHeader: true
+      fields:
+        - "customer"
   phases:
-    - duration: 1
-      arrivalRate: 1
+    - duration: 30
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -29,14 +34,18 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get Shipment By Customer"
-      - get:
-          afterResponse: "logResponse1"
-          url: "/admin/api/v2/users?page=1&per_page=25&paginate=true&sort_by=optimized_name&test=false&select=optimized_name%20company_name%20_type%20picture%20require_tracking_id%20email&lean=false&order=asc&_type=Shipper&name=CEVA"
-          headers:
-            authorization: "X-Cargomatic {{ token }}"
-            authority: "admin-api-acceptance.cargomatic.com"
-            content-type: "application/json"
-            sec-fetch-site: "same-site"
-            sec-fetch-mode: "cors"
-            sec-fetch-dest: "empty"
+      - function: getPayload15
+      - loop:
+        - think: 1  
+        - log: "Shipment By Customer"
+        - get:
+            afterResponse: "logResponse"
+            url: "{{ urlEndPoint3 }}"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+        whileTrue: "statusReady14"

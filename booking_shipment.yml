@@ -18,8 +18,8 @@ config:
         - "value"
         - "type"
   phases:
-    - duration: 1
-      arrivalCount: 1
+    - duration: 30
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -40,7 +40,7 @@ scenarios:
               as: token
       - function: getPayload7
       - loop:
-        - think: 5     
+        - think: 1    
         - log: "Booking Shipment"
         - post:
             afterResponse: "logResponse"

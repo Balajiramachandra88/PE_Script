@@ -15,7 +15,7 @@ config:
         - "shipmentid"
   phases:
     - duration: 2
-      arrivalRate: 2
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -36,10 +36,10 @@ scenarios:
               as: token
       - function: getPayload5
       - loop:
-        - think: 5     
+        - think: 1 
         - log: "Driverassigment_details"
         - post:
-            url: "/api/v2/jobs/{{ shipmentid }}/driver"
+            url: "{{ urlEndPoint6 }}"
             headers:
               authorization: "X-Cargomatic {{ token }}"
               authority: "admin-api-acceptance.cargomatic.com"

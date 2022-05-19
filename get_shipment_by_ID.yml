@@ -9,19 +9,17 @@ config:
         - "username"
         - "password"
     - path: "get_shipment_by_ID.csv"
-      order: iterate
+      order: sequence
       skipHeader: true
       fields:
         - "shipmentid"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      rampUp: 1
+    - duration: 30
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
       - post:
-          afterResponse: "logResponse"
           url: "/users/login"
           headers:
             authority: "admin-api-acceptance.cargomatic.com"
@@ -36,15 +34,18 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get shipment by id"
-      - think: 1
-      - get:
-          afterResponse: "logResponse1"
-          url: "/api/v3/jobs/{{ shipmentid }}"
-          headers:
-            authorization: "X-Cargomatic {{ token }}"
-            authority: "admin-api-acceptance.cargomatic.com"
-            content-type: "application/json"
-            sec-fetch-site: "same-site"
-            sec-fetch-mode: "cors"
-            sec-fetch-dest: "empty"
+      - function: getPayload16
+      - loop:
+        - think: 1  
+        - log: "Get shipment by id"
+        - get:
+            afterResponse: "logResponse"
+            url: "{{ urlEndPoint4 }}"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+        whileTrue: "statusReady15"

@@ -14,8 +14,8 @@ config:
       fields:
         - "refNumber"
   phases:
-    - duration: 60
-      arrivalCount: 4
+    - duration: 30
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -34,15 +34,18 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get shipment by Reference Number"
-      - think: 1
-      - get:
-          afterResponse: "logResponse1"
-          url: "/api/v3/jobs?reference%5B0%5D={{ refNumber }}-&deliver_after%5B0%5D=2022-02-01T08%3A00%3A00.000Z&deliver_by%5B0%5D=2022-02-17T07%3A59%3A59.999Z&page=1&per_page=25&_=1645002950612"
-          headers:
-            authorization: "X-Cargomatic {{ token }}"
-            authority: "admin-api-acceptance.cargomatic.com"
-            content-type: "application/json"
-            sec-fetch-site: "same-site"
-            sec-fetch-mode: "cors"
-            sec-fetch-dest: "empty"
+      - function: getPayload17
+      - loop:
+        - think: 1  
+        - log: "Get shipment by Reference Number"
+        - get:
+            afterResponse: "logResponse"
+            url: "{{ urlEndPoint5 }}"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+        whileTrue: "statusReady16"

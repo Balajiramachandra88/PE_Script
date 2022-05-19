@@ -40,7 +40,7 @@ scenarios:
         - log: "Offer Distribution"
         - post:
             afterResponse: "logResponse"
-            url: "/admin/marketplace/{{shipmentid}}/give?resend=false"
+            url: "{{ urlEndPoint7 }}"
             headers:
               authorization: "Bearer {{ token }}"
               authority: "cargo-api-acceptance.cargomatic.com"
@@ -50,10 +50,7 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
             json: "{{ payload8 }}"  
-            capture:
-              - json: $.shipments
-                as: shipments
-        whileTrue: "statusReady"
+        whileTrue: "statusReady17"
 
             
 

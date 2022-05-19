@@ -14,13 +14,12 @@ config:
       fields:
         - "carrierid"
   phases:
-    - duration: 20
+    - duration: 30
       arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
       - post:
-          afterResponse: "logResponse"
           url: "/users/login"
           headers:
             authority: "admin-api-acceptance.cargomatic.com"
@@ -35,14 +34,18 @@ scenarios:
           capture:
             - json: $.token
               as: token
-      - log: "Get payout By carrier"
-      - get:
-          afterResponse: "logResponse1"
-          url: "/api/v2/carriers/{{ carrierid }}/payouts?page=1&page_size=20&sort_by=date_created&sort%5Bkey%5D=due_date&sort%5Border%5D=desc&sort%5Bkey%5D=due_date&sort%5Border%5D=desc"
-          headers:
-            authorization: "X-Cargomatic {{ token }}"
-            authority: "admin-api-acceptance.cargomatic.com"
-            content-type: "application/json"
-            sec-fetch-site: "same-site"
-            sec-fetch-mode: "cors"
-            sec-fetch-dest: "empty"
+      - function: getPayload14
+      - loop:
+        - think: 1  
+        - log: "get_payouts_by_carrier"
+        - get:
+            afterResponse: "logResponse"
+            url: "{{ urlEndPoint2 }}"
+            headers:
+              authorization: "X-Cargomatic {{ token }}"
+              authority: "admin-api-acceptance.cargomatic.com"
+              content-type: "application/json"
+              sec-fetch-site: "same-site"
+              sec-fetch-mode: "cors"
+              sec-fetch-dest: "empty"
+        whileTrue: "statusReady13"

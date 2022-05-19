@@ -18,9 +18,8 @@ config:
         - "value"
         - "type"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      MaxVusers: 1
+    - duration: 20
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token"
@@ -41,7 +40,7 @@ scenarios:
               as: token
       - function: getPayload2
       - loop:
-        - think: 10     
+        - think: 1
         - log: "Create Accessorial Request"
         - post:
             afterResponse: "logResponse"
