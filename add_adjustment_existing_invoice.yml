@@ -40,7 +40,7 @@ scenarios:
         - log: "Add adjustment Invoice"
         - post:
             afterResponse: "logResponse"
-            url: "/admin/api/v2/jobs/{{shipmentid}}/adjustments"
+            url: "{{urlEndPoint8}}"
             headers:
               authorization: "X-Cargomatic {{ token }}"
               authority: "cargo-api-acceptance.cargomatic.com"

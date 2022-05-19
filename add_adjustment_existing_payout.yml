@@ -14,8 +14,8 @@ config:
       fields:
         - "shipmentid"
   phases:
-    - duration: 1
-      arrivalCount: 1
+    - duration: 20
+      arrivalCount: 2
 scenarios:
   - flow:
       - log: "Get auth token1"
@@ -40,7 +40,7 @@ scenarios:
         - log: "Add adjustment Payout"
         - post:
             afterResponse: "logResponse"
-            url: "/admin/api/v2/jobs/{{shipmentid}}/adjustments"
+            url: "{{urlEndPoint9}}"
             headers:
               authorization: "X-Cargomatic {{ token }}"
               authority: "cargo-api-acceptance.cargomatic.com"

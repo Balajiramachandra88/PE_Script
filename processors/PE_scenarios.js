@@ -18,6 +18,9 @@ const csvFilePath14 = path.dirname(__dirname) + '/excel/get_payouts_by_carrier.c
 const csvFilePath15 = path.dirname(__dirname) + '/excel/get_shipment_by_customer.csv';
 const csvFilePath16 = path.dirname(__dirname) + '/excel/get_shipment_by_ID.csv';
 const csvFilePath17 = path.dirname(__dirname) + '/excel/get_shipment_by_refNbr.csv';
+const csvFilePath18 = path.dirname(__dirname) + '/excel/authentication.csv';
+
+
 module.exports = {
     getPayload,
     _parseCSV,
@@ -41,6 +44,7 @@ module.exports = {
     getPayload15,
     getPayload16,
     getPayload17,
+    getPayload19,
     statusReady,
     statusReady3,
     statusReady4,
@@ -57,7 +61,8 @@ module.exports = {
     statusReady15,
     statusReady16,
     statusReady17,
-    statusReady18
+    statusReady18,
+    statusReady19
 
     // statusReady4,
     // statusReady5
@@ -95,18 +100,23 @@ let data = {
     "ledger": "receivables"
 }
 
-
+function formatUrl8(shipmentid) {
+    return `/admin/api/v2/jobs/${shipmentid}/adjustments`; 
+}
 
 function getPayload(context, events, next) {
     _parseCSV5().then((jsonObj5) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj5.length);
         let newData = data
+        let newURL = formatUrl8(jsonObj5[Number(currentRow)].shipmentid.toString())
         newData.adjustment.equipment = jsonObj5[Number(currentRow)].equipmentid.toString()
         newData.adjustment.message = jsonObj5[Number(currentRow)].message.toString()
         newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
         newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
         context.vars.payload = newData;
+        context.vars.urlEndPoint8 = newURL;
+        console.log("New URL", context.vars.urlEndPoint8)
         console.log("New Transformed Data", newData)
         context.vars.currentRow = currentRow + 1;
         return next();
@@ -120,11 +130,14 @@ function statusReady5(context, next) {
         let newData = data
         const continueLooping = currentRow < jsonObj5.length;
         if (continueLooping) {
+            let newURL = formatUrl8(jsonObj5[Number(currentRow)].shipmentid.toString())
             newData.adjustment.equipment = jsonObj5[Number(currentRow)].equipmentid.toString()
             newData.adjustment.message = jsonObj5[Number(currentRow)].message.toString()
             newData.adjustment.value = jsonObj5[Number(currentRow)].value.toString()
             newData.adjustment.type = jsonObj5[Number(currentRow)].type.toString()
             context.vars.payload = newData;
+            context.vars.urlEndPoint8 = newURL;
+            console.log("New URL", context.vars.urlEndPoint8)
             console.log("New Transformed Data", newData)
         }
         context.vars.currentRow = currentRow + 1;
@@ -157,17 +170,23 @@ let data1 = {
     "ledger": "payables"
 }
 
+function formatUrl9(shipmentid1) {
+    return `/admin/api/v2/jobs/${shipmentid1}/adjustments`; 
+}
 
 function getPayload1(context, events, next) {
     _parseCSV4().then((jsonObj4) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj4.length);
         let newData = data1
+        let newURL = formatUrl9(jsonObj4[Number(currentRow)].shipmentid1.toString())
         newData.adjustment.equipment = jsonObj4[Number(currentRow)].equipmentid.toString()
         newData.adjustment.message = jsonObj4[Number(currentRow)].message.toString()
         newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
         newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
         context.vars.payload1 = newData;
+        context.vars.urlEndPoint9 = newURL;
+        console.log("New URL", context.vars.urlEndPoint9)
         console.log("New Transformed Data", newData)
         context.vars.currentRow = currentRow + 1;
         return next();
@@ -182,11 +201,14 @@ function statusReady4(context, next) {
         const continueLooping = currentRow < jsonObj4.length;
         console.log(currentRow, jsonObj4[Number])
         if (continueLooping) {
+            let newURL = formatUrl9(jsonObj4[Number(currentRow)].shipmentid1.toString())
             newData.adjustment.equipment = jsonObj4[Number(currentRow)].equipmentid.toString()
             newData.adjustment.message = jsonObj4[Number(currentRow)].message.toString()
             newData.adjustment.value = jsonObj4[Number(currentRow)].value.toString()
             newData.adjustment.type = jsonObj4[Number(currentRow)].type.toString()
             context.vars.payload1 = newData;
+            context.vars.urlEndPoint9 = newURL;
+            console.log("New URL", context.vars.urlEndPoint9)
             console.log("New Transformed Data", newData)
         }
         context.vars.currentRow = currentRow + 1;
@@ -1555,6 +1577,50 @@ function statusReady16(context, next) {
         return next(continueLooping);
     })
 }
+
+
+function _parseCSV19() {
+    return new Promise((resolve, _) => {
+        csv()
+            .fromFile(csvFilePath18)
+            .then((jsonObj19) => {
+                resolve(jsonObj19)
+            })
+    })
+}
+let data19 = {"username":"admin","password":"admin"}
+
+function getPayload19(context, events, next) {
+    _parseCSV19().then((jsonObj19) => {
+        let currentRow = 0;
+        console.log(currentRow, jsonObj19.length);
+        let newData = data19
+        newData.username = jsonObj19[Number(currentRow)].username.toString()
+        newData.password = jsonObj19[Number(currentRow)].password.toString()
+        context.vars.payload19 = newData;
+        console.log("autherntication Data", newData)
+        context.vars.currentRow = currentRow + 1;
+        return next();
+    })
+}
+
+function statusReady19(context, next) {
+    _parseCSV5().then((jsonObj19) => {
+        let currentRow = context.vars.currentRow;
+        console.log(currentRow, jsonObj19.length);
+        let newData = data19
+        const continueLooping = currentRow < jsonObj19.length;
+        if (continueLooping) {
+            newData.username = jsonObj19[Number(currentRow)].username.toString()
+            newData.password = jsonObj19[Number(currentRow)].password.toString()
+            context.vars.payload19 = newData;
+            console.log("autherntication Data", newData)
+        }
+        context.vars.currentRow = currentRow + 1;
+        return next(continueLooping);
+    })
+}
+
 
 function logResponse(requestParams, response, context, ee, next) {
     const parsedResponse = response.body
