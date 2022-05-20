@@ -9,8 +9,8 @@ config:
         - "username"
         - "password"
   phases:
-    - duration: 20
-      arrivalCount: 2
+    - duration: 5
+      arrivalCount: 1
 scenarios:
   - flow:
       - function: getPayload19
@@ -27,5 +27,7 @@ scenarios:
               sec-fetch-mode: "cors"
               sec-fetch-dest: "empty"
               referer: "https://command-acceptance.cargomatic.com/"
-            json: "{{ payload19 }}" 
+            json:
+              username: "{{ username }}"
+              password: "{{ password }}" 
         whileTrue: "statusReady19"

@@ -1588,33 +1588,28 @@ function _parseCSV19() {
             })
     })
 }
-let data19 = {"username":"admin","password":"admin"}
 
 function getPayload19(context, events, next) {
     _parseCSV19().then((jsonObj19) => {
         let currentRow = 0;
         console.log(currentRow, jsonObj19.length);
-        let newData = data19
-        newData.username = jsonObj19[Number(currentRow)].username.toString()
-        newData.password = jsonObj19[Number(currentRow)].password.toString()
-        context.vars.payload19 = newData;
-        console.log("autherntication Data", newData)
+        context.vars.username = jsonObj19[Number(currentRow)].username
+        context.vars.password = jsonObj19[Number(currentRow)].password
         context.vars.currentRow = currentRow + 1;
+        console.log("autherntication Data", context.vars.username, context.vars.password)
         return next();
     })
 }
 
 function statusReady19(context, next) {
-    _parseCSV5().then((jsonObj19) => {
+    _parseCSV19().then((jsonObj19) => {
         let currentRow = context.vars.currentRow;
         console.log(currentRow, jsonObj19.length);
-        let newData = data19
         const continueLooping = currentRow < jsonObj19.length;
         if (continueLooping) {
-            newData.username = jsonObj19[Number(currentRow)].username.toString()
-            newData.password = jsonObj19[Number(currentRow)].password.toString()
-            context.vars.payload19 = newData;
-            console.log("autherntication Data", newData)
+            context.vars.username = jsonObj19[Number(currentRow)].username
+            context.vars.password = jsonObj19[Number(currentRow)].password
+            console.log("autherntication Data", context.vars.username, context.vars.password)
         }
         context.vars.currentRow = currentRow + 1;
         return next(continueLooping);
