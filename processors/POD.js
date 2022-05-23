@@ -31,8 +31,8 @@ function logResponse(requestParams, response, context, ee, next) {
 
 function setPODUploadJSONbody(requestParams, context, ee, next) {
   const payload = {
-    shipmentId: "6272400a4dc5c64bff921bd5",
-    stopId: "627240054dc5c64bff921b5e",
+    shipmentId: "628b949f86c212d6159e5008",
+    stopId: "628b949b86c212d6159e4f45",
     meta: {
       signatory: "Test",
       date: "2022-04-28T07:55:00.000Z",
@@ -44,7 +44,7 @@ function setPODUploadJSONbody(requestParams, context, ee, next) {
       reasonCode: "31",
       reasonDescription: "CookieJar",
       timezone: "America/Los_Angeles",
-      containerId: "TEST7856322",
+      containerId: "TEST1457829",
       files: [
         {
           uri: context.vars.key1,
@@ -54,5 +54,7 @@ function setPODUploadJSONbody(requestParams, context, ee, next) {
       imageMetadataFiles: [context.vars.key],
     },
   };
-  requestParams.body = JSON.stringify(payload);
+  context.vars.payload = payload;
+  console.log("[DEBUG] Request: Added payload for Stop Completion", payload);
+  return next();
 }

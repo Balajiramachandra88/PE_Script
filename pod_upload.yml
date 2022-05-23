@@ -38,7 +38,7 @@ scenarios:
       - log: "POD file upload"
       - post:
           beforeRequest: 'setJSONBody' 
-          url: "/api/v2/jobs/6272400a4dc5c64bff921bd5/stops/627240054dc5c64bff921b5e/uploads"
+          url: "/api/v2/jobs/628b949f86c212d6159e5008/stops/628b949b86c212d6159e4f45/uploads"
           afterResponse: "logResponse"
           headers:
             authorization: "Bearer {{ token }}"
@@ -58,7 +58,7 @@ scenarios:
           url: "/api/v3/stops/complete"
           afterResponse: "logResponse"
           headers:
-            authorization: "Bearer "
+            authorization: "Bearer {{ token }}"
             authority: "admin-api-acceptance.cargomatic.com"
             accept: "vnd.cargomatic+json;version=1"
             content-type: "application/json"
